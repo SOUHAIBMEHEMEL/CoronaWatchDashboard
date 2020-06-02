@@ -34,6 +34,7 @@
     "react-scripts": "3.4.0",
     "react-text": "^3.2.0",
     "react-token-auth": "^1.1.7",
+    "react-twitter-embed": "^3.0.3",
     "recharts": "^1.8.5",
     "redux": "^4.0.5",
     "video-react": "^0.14.1"
