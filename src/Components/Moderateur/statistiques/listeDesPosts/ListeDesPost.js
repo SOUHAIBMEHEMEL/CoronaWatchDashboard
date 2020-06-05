@@ -1,11 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Async from 'react-async';
-import Grid from '@material-ui/core/Grid';
 import clsx from 'clsx';
 import { lighten, makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
-import GroupIcon from '@material-ui/icons/Group';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
@@ -23,17 +20,9 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import FilterListIcon from '@material-ui/icons/FilterList';
 import RefreshIcon from '@material-ui/icons/Refresh';
 import StyledBadge from '@material-ui/core/Badge';
-import Post from './post/Post';
-import { Card } from '@material-ui/core';
-import mock from './data'
+import mock from '../data'
 
-var rows ;
-
-// load data
-const loadData = () =>
-  fetch("https://corona-watch-esi.herokuapp.com/scrapping/youtube-videos/")
-    .then(res => (res.ok ? res : Promise.reject(res)))
-    .then(res => res.json())
+const rows =mock.ArticlesList;
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -62,8 +51,11 @@ function stableSort(array, comparator) {
 }
 
 const headCells = [
-  { id: 'titreArticle', numeric: false, disablePadding: true, label: 'Date' },
-  { id: 'agentDeSante', numeric: false, disablePadding: false, label: 'Site' },
+  { id: 'titreArticle', numeric: false, disablePadding: true, label: 'Article' },
+  { id: 'Date', numeric: true, disablePadding: false, label: 'Date' },
+  { id: 'agentDeSante', numeric: false, disablePadding: false, label: 'Redacteur' },
+  { id: 'jaime', numeric: true, disablePadding: false, label: "j'aime" },
+  { id: 'commentaire', numeric: true, disablePadding: false, label: 'Commentaire' },
 ];
 
 function EnhancedTableHead(props) {
@@ -75,11 +67,19 @@ function EnhancedTableHead(props) {
   return (
     <TableHead>
       <TableRow>
+        <TableCell padding="checkbox">
+          <Checkbox
+            indeterminate={numSelected > 0 && numSelected < rowCount}
+            checked={rowCount > 0 && numSelected === rowCount}
+            onChange={onSelectAllClick}
+            inputProps={{ 'aria-label': 'select all desserts' }}
+          />
+        </TableCell>
         {headCells.map(headCell => (
           <TableCell
             key={headCell.id}
             align= 'left'
-            paddingLeft='20'
+            padding='none'
             sortDirection={orderBy === headCell.id ? order : false}
           >
             <TableSortLabel 
@@ -130,9 +130,6 @@ const useToolbarStyles = makeStyles(theme => ({
   title: {
     flex: '1 1 100%',
   },
-  article:{
-    display:'none',
-  }
 }));
 
 const EnhancedTableToolbar = props => {
@@ -252,10 +249,6 @@ export default function EnhancedTable() {
   const handleClick = (event, name) => {
     const selectedIndex = selected.indexOf(name);
     console.log('index=   ',name);
-    var x=document.getElementsByClassName('Youtube');
-    document.getElementById('firstYoutube').style.display='none';
-    for(let i=0;i<x.length; i++){x[i].style.display='none';}
-    x[name].style.display='block';
     //afficher article of index=name
     let newSelected = [];
 
@@ -273,6 +266,7 @@ export default function EnhancedTable() {
     }
 
     setSelected(newSelected);
+    console.log('index=   ',newSelected);
   };
 
   const handleChangePage = (event, newPage) => {
@@ -286,106 +280,79 @@ export default function EnhancedTable() {
   
   const isSelected = name => selected.indexOf(name) !== -1;
 
-  var emptyRows;
+  const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
 
   return (
-    <Async promiseFn={loadData}>
-        {({ data, err, isLoading }) => {
-          if (isLoading) return "Loading..."
-          if (err) return `Something went wrong: ${err.message}`
+    <div className={classes.root}>
+      <Paper className={classes.paper}>
+        <EnhancedTableToolbar numSelected={selected.length} />
+        <TableContainer>
+          <Table
+            className={classes.table}
+            aria-labelledby="tableTitle"
+            size={dense ? 'small' : 'medium'}
+            aria-label="enhanced table"
+          >
+            <EnhancedTableHead
+              classes={classes}
+              numSelected={selected.length}
+              order={order}
+              orderBy={orderBy}
+              onSelectAllClick={handleSelectAllClick}
+              onRequestSort={handleRequestSort}
+              rowCount={rows.length}
+            />
+            <TableBody>
+              {stableSort(rows, getComparator(order, orderBy))
+                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                .map((row, index) => {
+                  const isItemSelected = isSelected(row.idArticle);
+                  const labelId = `enhanced-table-checkbox-${index}`;
 
-          if (data){
-            rows=data;
-            emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
-            return (
-                <div className={classes.root}>
-                <Grid container spacing={3}>
-                    <Grid container item lg={12} md={12} xl={12} xs={12}>
-                      <Card style={{height:'30px', width:'30px', backgroundColor:'#4E73DF', borderRadius:'5px',boxShadow: '1px 2px 11px -1px rgba(164,164,208,0.75)',}}>
-                        <GroupIcon style={{color:'#ffffff',height:'16px', width:'16px', marginTop:'7px', marginLeft:'7px' }}/>
-                      </Card>
-                      <Typography variant='h6' style={{textAlign:'left', marginLeft:'10px',}}>
-                        Informations a partir des reseaux sociaux
-                      </Typography>
-                    </Grid>
-                    {data.map(stat => (
-                    <Grid className={'Youtube'} item lg={8} md={8} xl={8} xs={12} style={{display:'none'}}>
-                        <Post {...stat}/>
-                    </Grid>
-                     ))}
-                    <Grid id='firstYoutube' item lg={8} md={8} xl={8} xs={12}>
-                        <Post {...data[0]}/>
-                    </Grid>
-                    <Grid item lg={4} md={4} xl={4} xs={12}>
-                       <Card className={classes.root} style={{boxShadow: '0px 2px 23px -14px rgba(204,204,238,0.75)',borderRadius:'5px'}}>
-                         <Paper className={classes.paper}>
-                            <EnhancedTableToolbar numSelected={selected.length} />
-                            <TableContainer>
-                            <Table
-                                className={classes.table}
-                                aria-labelledby="tableTitle"
-                                size={dense ? 'small' : 'medium'}
-                                aria-label="enhanced table"
-                            >
-                                <EnhancedTableHead
-                                classes={classes}
-                                numSelected={selected.length}
-                                order={order}
-                                orderBy={orderBy}
-                                onSelectAllClick={handleSelectAllClick}
-                                onRequestSort={handleRequestSort}
-                                rowCount={rows.length}
-                                />
-                                <TableBody>
-                                {stableSort(data, getComparator(order, orderBy))
-                                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                                    .map((row, index) => {
-                                    const idx = index;
-                                    const isItemSelected = isSelected(idx);
-                                    const labelId = `enhanced-table-checkbox-${index}`;
-                                    var date =new Date(row.timestamp).toLocaleString();
-                                    return (
-                                        <TableRow
-                                        hover
-                                        onClick={event => handleClick(event, idx)}
-                                        role="checkbox"
-                                        aria-checked={isItemSelected}
-                                        tabIndex={-1}
-                                        key={idx}
-                                        selected={isItemSelected}
-                                        >
-                                      
-                                        <TableCell paddingLeft='20' component="th" id={labelId} scope="row" style={{width:'20%'}}>
-                                            {date}
-                                        </TableCell>
-                                        <TableCell align="left" style={{width:'20%'}}>Youtube</TableCell>
-                                        </TableRow>
-                                    );
-                                    })}
-                                {emptyRows > 0 && (
-                                    <TableRow style={{ height: (dense ? 33 : 53) * emptyRows }}>
-                                    <TableCell colSpan={6} />
-                                    </TableRow>
-                                )}
-                                </TableBody>
-                            </Table>
-                            </TableContainer>
-                            <TablePagination
-                            rowsPerPageOptions={[10, 20, 30]}
-                            component="div"
-                            count={rows.length}
-                            rowsPerPage={rowsPerPage}
-                            page={page}
-                            onChangePage={handleChangePage}
-                            onChangeRowsPerPage={handleChangeRowsPerPage}
-                            />
-                          </Paper>
-                        </Card>
-                    </Grid>
-                </Grid>
-            </div>
-            )}
-        }}
-    </Async>  
+                  return (
+                    <TableRow
+                      hover
+                      onClick={event => handleClick(event, row.idArticle)}
+                      role="checkbox"
+                      aria-checked={isItemSelected}
+                      tabIndex={-1}
+                      key={row.idArticle}
+                      selected={isItemSelected}
+                    >
+                      <TableCell padding="checkbox">
+                        <Checkbox
+                          checked={isItemSelected}
+                          inputProps={{ 'aria-labelledby': labelId }}
+                        />
+                      </TableCell>
+                      <TableCell component="th" id={labelId} scope="row" padding="none" style={{width:'20%'}}>
+                        {row.titreArticle}
+                      </TableCell>
+                      <TableCell align="left" padding="none" style={{width:'20%'}}>{row.date}</TableCell>
+                      <TableCell align="left" style={{width:'20%'}}>{row.agentDeSante}</TableCell>
+                      <TableCell align="left" style={{width:'17%'}}>{row.jaime}</TableCell>
+                      <TableCell align="left">{row.commentaire}</TableCell>
+                    </TableRow>
+                  );
+                })}
+              {emptyRows > 0 && (
+                <TableRow style={{ height: (dense ? 33 : 53) * emptyRows }}>
+                  <TableCell colSpan={6} />
+                </TableRow>
+              )}
+            </TableBody>
+          </Table>
+        </TableContainer>
+        <TablePagination
+          rowsPerPageOptions={[10, 20, 30]}
+          component="div"
+          count={rows.length}
+          rowsPerPage={rowsPerPage}
+          page={page}
+          onChangePage={handleChangePage}
+          onChangeRowsPerPage={handleChangeRowsPerPage}
+        />
+      </Paper>
+    </div>
   );
 }

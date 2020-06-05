@@ -31,7 +31,7 @@ import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import Avatar from '@material-ui/core/Avatar';
 import Dashboard from './dashboard/Dashboard'; 
 import Test from './test_fonctionnel_article/GestionArticles';
-import Statistiques from './dashboard/Dashboard';
+import Statistiques from './statistiques/InfoReseaux';
 import MonCompte from './dashboard/Dashboard';
 import GestionDesArticles from './GestionArticles/GestionArticles';
 import InfosReseaux from './infosReseaux/InfoReseaux'
