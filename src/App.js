@@ -9,6 +9,10 @@ import LoginRedacteur from './Components/Redacteur/auth/loginPage'
 import LogoutRedacteur from './Components/Redacteur/auth/logout'
 import RedacteurPage from './Components/Redacteur/auth/RedacteurPage'
 
+import LoginAgentDeSante from './Components/AgentDeSante/auth/loginPage'
+import LogoutAgentDeSante from './Components/AgentDeSante/auth/logout'
+import AgentDeSantePage from './Components/AgentDeSante/auth/AgentDeSantePage'
+
 import Gestionnaire from './Components/gestionnaire'
 
 export default class logout extends Component {
@@ -23,6 +27,9 @@ export default class logout extends Component {
         <Route exact path='/Redacteur/login' component={LoginRedacteur} />
         <Route exact path='/Redacteur/RedacteurPage' component={RedacteurPage} />
         <Route exact path='/Redacteur/logout' component={LogoutRedacteur} />
+        <Route exact path='/AgentDeSante/login' component={LoginAgentDeSante} />
+        <Route exact path='/AgentDeSante/AgentDeSantePage' component={AgentDeSantePage} />
+        <Route exact path='/AgentDeSante/logout' component={LogoutAgentDeSante} />
       </Switch>
       </BrowserRouter>
     );

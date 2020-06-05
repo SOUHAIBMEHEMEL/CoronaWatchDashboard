@@ -30,6 +30,12 @@ export default function gestionnaire() {
                     </ListItemAvatar>
                     <Link style={{color:'#444456'}} to='/Redacteur/login'>Redacteur</Link>
                 </ListItem>
+                <ListItem button key='1' className={'menuItem1'}  >
+                    <ListItemAvatar>
+                     <Avatar />
+                    </ListItemAvatar>
+                    <Link style={{color:'#444456'}} to='/AgentDeSante/login'>Agent de santé</Link>
+                </ListItem>
             </List>          
         </Grid>    
        </div>
