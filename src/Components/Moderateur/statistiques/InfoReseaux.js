@@ -358,7 +358,7 @@ export default function EnhancedTable() {
                                         <TableCell paddingLeft='20' component="th" id={labelId} scope="row" style={{width:'20%'}}>
                                             {date}
                                         </TableCell>
-                                        <TableCell align="left" style={{width:'20%'}}>Youtube</TableCell>
+                                        <TableCell align="left" style={{width:'20%'}}>Twitter</TableCell>
                                         </TableRow>
                                     );
                                     })}

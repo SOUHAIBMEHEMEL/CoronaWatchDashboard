@@ -35,8 +35,11 @@ import Statistiques from './statistiques/InfoReseaux';
 import MonCompte from './dashboard/Dashboard';
 import GestionDesArticles from './GestionArticles/GestionArticles';
 import InfosReseaux from './infosReseaux/InfoReseaux'
+import DailyMotion from './dailyMotion/InfoReseaux'
 import GestionPostsUtilisateurs from './postsUtilisateurs/GestionPostsUtilisateurs';
 import {Link} from 'react-router-dom';
+import YouTubeIcon from '@material-ui/icons/YouTube';
+import TwitterIcon from '@material-ui/icons/Twitter';
 
 const drawerWidth = 240;
 
@@ -224,9 +227,9 @@ export default function PersistentDrawerLeft() {
     if (index === 1 ) return (<AssignmentIcon /> ) ;
     if (index === 2 ) return (<PlaceIcon/>) ;
     if (index === 3 ) return (<GroupIcon/>) ;
-    if (index === 4 ) return (<PublicIcon/>) ;
-    if (index === 5 ) return (<InsertChartIcon/>) ;
-    if (index === 6 ) return (<PersonIcon/>) ;
+    if (index === 4 ) return (<YouTubeIcon/>) ;
+    if (index === 5 ) return (<TwitterIcon/>) ;
+    if (index === 6 ) return (<PublicIcon/>) ;
   }
 
   function  handleContent (index){
@@ -318,7 +321,7 @@ export default function PersistentDrawerLeft() {
         <Divider style={{width:'50%', marginLeft:'25%',backgroundColor:'#fff', marginBottom:'10px'}} />
         <List>
           {['Dashboard','Gestion des articles','Gestion des zones', 'Gestion des postes',
-              'Infos des reseaux', 'Statistiques', 'Mon compte'].map((text, index) => (
+              'Youtube', 'Twitter', 'Dailymotion'].map((text, index) => (
             <ListItem button key={index} className={'menuItem01'} onClick={event => handleContent(index)} >
               <ListItemIcon className={classes.menuItem}>
                 {chooseIncon(index)}
@@ -365,7 +368,7 @@ export default function PersistentDrawerLeft() {
           <Statistiques/>         
         </Grid>
         <Grid className={'contentModerateur'} style={{display:'none'}} item lg={12} md={12}>
-          <MonCompte />         
+          <DailyMotion />         
         </Grid>
       </main> 
     </div>

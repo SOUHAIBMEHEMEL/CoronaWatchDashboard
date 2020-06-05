@@ -22,8 +22,8 @@ import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import Button from '@material-ui/core/Button';
 import mock from '../data';
 
-import '../../../../Styles/video-react.css';
-import { Player } from 'video-react';
+import DailyMotion from './app';
+import ReactPlayer from "react-player";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -73,17 +73,19 @@ export default function RecipeReviewCard(props) {
   
   // load comments
   function loadComments() {
-     axios.get("https://corona-watch-esi.herokuapp.com/content/post-comments/"+data.id)
-     .then(res => {
-      //MyComments = res.data;
-      //this.setState({ emps });
-      console.log(res.data);
-    })
+    axios.get("https://corona-watch-esi.herokuapp.com/content/post-comments/"+data.id)
+        .then(res => {
+          //MyComments = res.data;
+          //this.setState({ emps });
+          console.log(res.data);
+        })
   }
   
-  const supprimerArticle = (event, id) => {
-    axios.delete('https://corona-watch-esi.herokuapp.com/content/articles/'+id)
+  const supprimerPost = (event, id) => {
+    console.log('id= ',id);
+    axios.delete('https://corona-watch-esi.herokuapp.com/scrapping/dailymotion-videos/'+id)
     .then((response) => {
+      console.log(response);
       document.getElementById('supprimerBtn').style.display='none';
     }, (error) => {
       console.log(error);
@@ -92,19 +94,14 @@ export default function RecipeReviewCard(props) {
   }
 
   const validerArticle = (event, data) => {
+    console.log('id= ',data.id);
     const data1 ={
-      "id": data.id,
-      "images": data.images,
-      "videos":data.videos,
-      "writer": data.writer,
-      "verified": true,
-      "timestamp": data.timestamp,
-      "title": data.title,
-      "content": data.content,
+     "verified": true,
     }
 
-    axios.put('https://corona-watch-esi.herokuapp.com/content/articles/'+data.id, data1)
+    axios.patch('https://corona-watch-esi.herokuapp.com/scrapping/dailymotion-videos/'+data.id, data1)
     .then((response) => {
+      console.log(response);
       document.getElementById('validerBtn').style.display='none';
     }, (error) => {
       console.log(error);
@@ -113,17 +110,16 @@ export default function RecipeReviewCard(props) {
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
-    loadComments();
   };
 
 
   return (
     <Card className={classes.root}>
-      <div style={{position:'absolute',marginTop:'15px', marginLeft:'280px'}}>
+      <div style={{position:'absolute',marginTop:'15px', marginLeft:'300px'}}>
           <Button id='validerBtn' variant="contained" color="primary" style={{backgroundColor:'#4E73DF', marginRight:'10px'}} onClick={event => validerArticle(event, data)}>
               Valider
             </Button>
-            <Button id='supprimerBtn' variant="contained" color="secondary" onClick={event => supprimerArticle(event, data.id)}>
+            <Button id='supprimerBtn' variant="contained" color="secondary" onClick={event => supprimerPost(event, data.id)}>
               Supprimer
           </Button>
         </div>
@@ -132,7 +128,7 @@ export default function RecipeReviewCard(props) {
           <Avatar src={mock.ArticleCard.photoProfilRedacteur} aria-label="recipe" className={classes.avatar}>
           </Avatar>
         }
-        title={data.writer}
+        title="DailyMotion"
         subheader={date}
       />
       <CardContent>
@@ -140,27 +136,12 @@ export default function RecipeReviewCard(props) {
         {data.title}
         </Typography> 
         <Typography variant="body2" color="textSecondary" component="p" style={{textAlign:'right'}}>
-        {data.content}</Typography>
+        description</Typography>
       </CardContent>
-      <Grid container spacing={1} style={{padding:'3%',}}>
-        {data.images.map(stat => (
-            <Grid item lg={6} md={6} xl={3} xs={12}>
-            <CardMedia
-            className={classes.media}
-            image={stat.content}
-            title="image"
-            />
-            </Grid>  
-        ))}
-        {data.videos.map(stat => (
-            <Grid item lg={12} md={12} xl={12} xs={12}>
-              <Player
-                playsInline
-                poster="/assets/poster.png"
-                src={stat.videos}
-              />
-            </Grid>  
-        ))}
+      <Grid container spacing={1} style={{padding:'4%',}}>
+        <Grid item lg={12} md={12} xl={12} xs={12}>
+         <DailyMotion video_id={data.dailymotion_id}></DailyMotion>
+        </Grid>
       </Grid>
       <CardActions disableSpacing>
         <IconButton aria-label="comments">
