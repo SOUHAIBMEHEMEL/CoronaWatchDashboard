@@ -22,9 +22,8 @@ import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import Button from '@material-ui/core/Button';
 import mock from '../data';
 
-import {  TwitterTweetEmbed } from 'react-twitter-embed';
-
-import ReactPlayer from "react-player";
+import '../../../../Styles/video-react.css';
+import { Player } from 'video-react';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -71,24 +70,20 @@ export default function RecipeReviewCard(props) {
   const [expanded, setExpanded] = React.useState(false);
 
   var date =new Date(data.timestamp).toLocaleString();
-  var str = data.tweet_url;
-  var twitter_id = str.substring(str.length - 19, str.length); 
   
   // load comments
   function loadComments() {
-    axios.get("https://corona-watch-esi.herokuapp.com/content/post-comments/"+data.id)
-        .then(res => {
-          //MyComments = res.data;
-          //this.setState({ emps });
-          console.log(res.data);
-        })
+     axios.get("https://corona-watch-esi.herokuapp.com/content/post-comments/"+data.id)
+     .then(res => {
+      //MyComments = res.data;
+      //this.setState({ emps });
+      console.log(res.data);
+    })
   }
   
-  const supprimerPost = (event, id) => {
-    console.log('id= ',id);
-    axios.delete('https://corona-watch-esi.herokuapp.com/scrapping/tweets/'+id)
+  const supprimerArticle = (event, id) => {
+    axios.delete('https://corona-watch-esi.herokuapp.com/content/articles/'+id)
     .then((response) => {
-      console.log(response);
       document.getElementById('supprimerBtn').style.display='none';
     }, (error) => {
       console.log(error);
@@ -97,14 +92,19 @@ export default function RecipeReviewCard(props) {
   }
 
   const validerArticle = (event, data) => {
-    console.log('tweet_id= ',data.id);
     const data1 ={
-     "verified": true,
+      "id": data.id,
+      "images": data.images,
+      "videos":data.videos,
+      "writer": data.writer,
+      "verified": true,
+      "timestamp": data.timestamp,
+      "title": data.title,
+      "content": data.content,
     }
 
-    axios.patch('https://corona-watch-esi.herokuapp.com/scrapping/tweets/'+data.id, data1)
+    axios.put('https://corona-watch-esi.herokuapp.com/content/articles/'+data.id, data1)
     .then((response) => {
-      console.log(response);
       document.getElementById('validerBtn').style.display='none';
     }, (error) => {
       console.log(error);
@@ -113,16 +113,17 @@ export default function RecipeReviewCard(props) {
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
+    loadComments();
   };
 
 
   return (
     <Card className={classes.root}>
-      <div style={{position:'absolute',marginTop:'15px', marginLeft:'300px'}}>
+      <div style={{position:'absolute',marginTop:'15px', marginLeft:'280px'}}>
           <Button id='validerBtn' variant="contained" color="primary" style={{backgroundColor:'#4E73DF', marginRight:'10px'}} onClick={event => validerArticle(event, data)}>
               Valider
             </Button>
-            <Button id='supprimerBtn' variant="contained" color="secondary" onClick={event => supprimerPost(event, data.id)}>
+            <Button id='supprimerBtn' variant="contained" color="secondary" onClick={event => supprimerArticle(event, data.id)}>
               Supprimer
           </Button>
         </div>
@@ -131,13 +132,35 @@ export default function RecipeReviewCard(props) {
           <Avatar src={mock.ArticleCard.photoProfilRedacteur} aria-label="recipe" className={classes.avatar}>
           </Avatar>
         }
-        title="Twitter"
+        title={data.writer}
         subheader={date}
       />
+      <CardContent>
+        <Typography variant="h6" style={{textAlign:'right', paddingBottom:'2%'}} >
+        {data.title}
+        </Typography> 
+        <Typography variant="body2" color="textSecondary" component="p" style={{textAlign:'right'}}>
+        {data.content}</Typography>
+      </CardContent>
       <Grid container spacing={1} style={{padding:'3%',}}>
-        <Grid item lg={12} md={12} xl={12} xs={12}>
-        <TwitterTweetEmbed tweetId={twitter_id}></TwitterTweetEmbed> 
-        </Grid>
+        {data.images.map(stat => (
+            <Grid item lg={6} md={6} xl={3} xs={12}>
+            <CardMedia
+            className={classes.media}
+            image={stat.content}
+            title="image"
+            />
+            </Grid>  
+        ))}
+        {data.videos.map(stat => (
+            <Grid item lg={12} md={12} xl={12} xs={12}>
+              <Player
+                playsInline
+                poster="/assets/poster.png"
+                src={stat.videos}
+              />
+            </Grid>  
+        ))}
       </Grid>
       <CardActions disableSpacing>
         <IconButton aria-label="comments">

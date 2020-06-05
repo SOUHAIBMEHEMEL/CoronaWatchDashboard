@@ -5,7 +5,7 @@ import Grid from '@material-ui/core/Grid';
 import clsx from 'clsx';
 import { lighten, makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
-import GroupIcon from '@material-ui/icons/Group';
+import AssignmentIcon from '@material-ui/icons/Assignment';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
@@ -23,7 +23,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import FilterListIcon from '@material-ui/icons/FilterList';
 import RefreshIcon from '@material-ui/icons/Refresh';
 import StyledBadge from '@material-ui/core/Badge';
-import Post from './post/Post';
+import ArticleCard from './article/ArticleCard';
 import { Card } from '@material-ui/core';
 import mock from './data'
 
@@ -31,7 +31,7 @@ var rows ;
 
 // load data
 const loadData = () =>
-  fetch("https://corona-watch-esi.herokuapp.com/scrapping/tweets/")
+  fetch("https://corona-watch-esi.herokuapp.com/content/articles/")
     .then(res => (res.ok ? res : Promise.reject(res)))
     .then(res => res.json())
 
@@ -62,8 +62,11 @@ function stableSort(array, comparator) {
 }
 
 const headCells = [
-  { id: 'titreArticle', numeric: false, disablePadding: true, label: 'Date' },
-  { id: 'agentDeSante', numeric: false, disablePadding: false, label: 'Site' },
+  { id: 'titreArticle', numeric: false, disablePadding: true, label: 'Article' },
+  { id: 'Date', numeric: true, disablePadding: false, label: 'Date' },
+  { id: 'agentDeSante', numeric: false, disablePadding: false, label: 'Redacteur' },
+  { id: 'jaime', numeric: true, disablePadding: false, label: "j'aime" },
+  { id: 'commentaire', numeric: true, disablePadding: false, label: 'Commentaire' },
 ];
 
 function EnhancedTableHead(props) {
@@ -75,11 +78,19 @@ function EnhancedTableHead(props) {
   return (
     <TableHead>
       <TableRow>
+        <TableCell padding="checkbox">
+          <Checkbox
+            indeterminate={numSelected > 0 && numSelected < rowCount}
+            checked={rowCount > 0 && numSelected === rowCount}
+            onChange={onSelectAllClick}
+            inputProps={{ 'aria-label': 'select all' }}
+          />
+        </TableCell>
         {headCells.map(headCell => (
           <TableCell
             key={headCell.id}
             align= 'left'
-            paddingLeft='20'
+            padding='none'
             sortDirection={orderBy === headCell.id ? order : false}
           >
             <TableSortLabel 
@@ -251,9 +262,8 @@ export default function EnhancedTable() {
 
   const handleClick = (event, name) => {
     const selectedIndex = selected.indexOf(name);
-    console.log('index=   ',name);
-    var x=document.getElementsByClassName('Twitter');
-    document.getElementById('firstTwitter').style.display='none';
+    var x=document.getElementsByClassName('article');
+    document.getElementById('firstArticle').style.display='none';
     for(let i=0;i<x.length; i++){x[i].style.display='none';}
     x[name].style.display='block';
     //afficher article of index=name
@@ -302,21 +312,21 @@ export default function EnhancedTable() {
                 <Grid container spacing={3}>
                     <Grid container item lg={12} md={12} xl={12} xs={12}>
                       <Card style={{height:'30px', width:'30px', backgroundColor:'#4E73DF', borderRadius:'5px',boxShadow: '1px 2px 11px -1px rgba(164,164,208,0.75)',}}>
-                        <GroupIcon style={{color:'#ffffff',height:'16px', width:'16px', marginTop:'7px', marginLeft:'7px' }}/>
+                        <AssignmentIcon style={{color:'#ffffff',height:'16px', width:'16px', marginTop:'7px',marginLeft:'7px' }}/>
                       </Card>
                       <Typography variant='h6' style={{textAlign:'left', marginLeft:'10px',}}>
-                        Informations a partir des reseaux sociaux
+                        Gestion Des Articles
                       </Typography>
                     </Grid>
                     {data.map(stat => (
-                    <Grid className={'Twitter'} item lg={8} md={8} xl={8} xs={12} style={{display:'none'}}>
-                        <Post {...stat}/>
+                    <Grid className={'article'} item lg={6} md={12} xl={12} xs={12} style={{display:'none'}}>
+                        <ArticleCard {...stat}/>
                     </Grid>
                      ))}
-                    <Grid id='firstTwitter' item lg={8} md={8} xl={8} xs={12}>
-                        <Post {...data[0]}/>
+                    <Grid id='firstArticle' item lg={6} md={12} xl={12} xs={12}>
+                        <ArticleCard {...data[0]}/>
                     </Grid>
-                    <Grid item lg={4} md={4} xl={4} xs={12}>
+                    <Grid item lg={6} md={12} xl={9} xs={12}>
                        <Card className={classes.root} style={{boxShadow: '0px 2px 23px -14px rgba(204,204,238,0.75)',borderRadius:'5px'}}>
                          <Paper className={classes.paper}>
                             <EnhancedTableToolbar numSelected={selected.length} />
@@ -354,11 +364,19 @@ export default function EnhancedTable() {
                                         key={idx}
                                         selected={isItemSelected}
                                         >
-                                      
-                                        <TableCell paddingLeft='20' component="th" id={labelId} scope="row" style={{width:'20%'}}>
-                                            {date}
+                                        <TableCell padding="checkbox">
+                                            <Checkbox
+                                            checked={isItemSelected}
+                                            inputProps={{ 'aria-labelledby': labelId }}
+                                            />
                                         </TableCell>
-                                        <TableCell align="left" style={{width:'20%'}}>Youtube</TableCell>
+                                        <TableCell component="th" id={labelId} scope="row" padding="none" style={{width:'20%'}}>
+                                            {row.title}
+                                        </TableCell>
+                                        <TableCell align="left" padding="none" style={{width:'20%'}}>{date}</TableCell>
+                                        <TableCell align="left" style={{width:'20%'}}>{row.writer}</TableCell>
+                                        <TableCell align="left" style={{width:'17%'}}>0</TableCell>
+                                        <TableCell align="left">0</TableCell>
                                         </TableRow>
                                     );
                                     })}
