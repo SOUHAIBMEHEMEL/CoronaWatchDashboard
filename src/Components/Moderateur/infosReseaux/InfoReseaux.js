@@ -7,6 +7,7 @@ import { lighten, makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import GroupIcon from '@material-ui/icons/Group';
 import TableBody from '@material-ui/core/TableBody';
+import YouTubeIcon from '@material-ui/icons/YouTube';
 import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
@@ -302,10 +303,10 @@ export default function EnhancedTable() {
                 <Grid container spacing={3}>
                     <Grid container item lg={12} md={12} xl={12} xs={12}>
                       <Card style={{height:'30px', width:'30px', backgroundColor:'#4E73DF', borderRadius:'5px',boxShadow: '1px 2px 11px -1px rgba(164,164,208,0.75)',}}>
-                        <GroupIcon style={{color:'#ffffff',height:'16px', width:'16px', marginTop:'7px', marginLeft:'7px' }}/>
+                        <YouTubeIcon style={{color:'#ffffff',height:'16px', width:'16px', marginTop:'7px', marginLeft:'7px' }}/>
                       </Card>
                       <Typography variant='h6' style={{textAlign:'left', marginLeft:'10px',}}>
-                        Informations a partir des reseaux sociaux
+                        YouTube
                       </Typography>
                     </Grid>
                     {data.map(stat => (
@@ -314,7 +315,7 @@ export default function EnhancedTable() {
                     </Grid>
                      ))}
                     <Grid id='firstYoutube' item lg={8} md={8} xl={8} xs={12}>
-                        <Post {...data[0]}/>
+                        
                     </Grid>
                     <Grid item lg={4} md={4} xl={4} xs={12}>
                        <Card className={classes.root} style={{boxShadow: '0px 2px 23px -14px rgba(204,204,238,0.75)',borderRadius:'5px'}}>

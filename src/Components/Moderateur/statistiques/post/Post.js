@@ -85,19 +85,20 @@ export default function RecipeReviewCard(props) {
   }
   
   const supprimerPost = (event, id) => {
-    console.log('id= ',id);
-    axios.delete('https://corona-watch-esi.herokuapp.com/scrapping/tweets/'+id)
-    .then((response) => {
-      console.log(response);
-      document.getElementById('supprimerBtn').style.display='none';
-    }, (error) => {
-      console.log(error);
-    });
+    const data1 ={
+      "deleted": true,
+     }
+ 
+     axios.patch('https://corona-watch-esi.herokuapp.com/scrapping/tweets/'+data.id, data1)
+     .then((response) => {
+       console.log(response);
+     }, (error) => {
+       console.log(error);
+     });
     
   }
 
   const validerArticle = (event, data) => {
-    console.log('tweet_id= ',data.id);
     const data1 ={
      "verified": true,
     }
@@ -105,7 +106,6 @@ export default function RecipeReviewCard(props) {
     axios.patch('https://corona-watch-esi.herokuapp.com/scrapping/tweets/'+data.id, data1)
     .then((response) => {
       console.log(response);
-      document.getElementById('validerBtn').style.display='none';
     }, (error) => {
       console.log(error);
     });
@@ -119,16 +119,18 @@ export default function RecipeReviewCard(props) {
   return (
     <Card className={classes.root}>
       <div style={{position:'absolute',marginTop:'15px', marginLeft:'300px'}}>
+          {!data.verified ? 
           <Button id='validerBtn' variant="contained" color="primary" style={{backgroundColor:'#4E73DF', marginRight:'10px'}} onClick={event => validerArticle(event, data)}>
               Valider
-            </Button>
-            <Button id='supprimerBtn' variant="contained" color="secondary" onClick={event => supprimerPost(event, data.id)}>
+          </Button>: <Button variant="contained" style={{marginRight:'10px'}} disabled>verifie</Button>}
+          {!data.deleted ? 
+          <Button id='supprimerBtn' variant="contained" color="secondary" onClick={event => supprimerPost(event, data.id)}>
               Supprimer
-          </Button>
+          </Button>: <Button variant="contained" disabled>Supprime</Button>}
         </div>
       <CardHeader style={{textAlign:'left'}}
         avatar={
-          <Avatar src={mock.ArticleCard.photoProfilRedacteur} aria-label="recipe" className={classes.avatar}>
+          <Avatar src={"../../images/socialMedia/twitter.png"}>
           </Avatar>
         }
         title="Twitter"

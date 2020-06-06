@@ -25,9 +25,11 @@ import RefreshIcon from '@material-ui/icons/Refresh';
 import StyledBadge from '@material-ui/core/Badge';
 import Post from './post/Post';
 import { Card } from '@material-ui/core';
+import TwitterIcon from '@material-ui/icons/Twitter';
 import mock from './data'
 
 var rows ;
+
 
 // load data
 const loadData = () =>
@@ -302,19 +304,20 @@ export default function EnhancedTable() {
                 <Grid container spacing={3}>
                     <Grid container item lg={12} md={12} xl={12} xs={12}>
                       <Card style={{height:'30px', width:'30px', backgroundColor:'#4E73DF', borderRadius:'5px',boxShadow: '1px 2px 11px -1px rgba(164,164,208,0.75)',}}>
-                        <GroupIcon style={{color:'#ffffff',height:'16px', width:'16px', marginTop:'7px', marginLeft:'7px' }}/>
+                        <TwitterIcon style={{color:'#ffffff',height:'16px', width:'16px', marginTop:'7px', marginLeft:'7px' }}/>
                       </Card>
                       <Typography variant='h6' style={{textAlign:'left', marginLeft:'10px',}}>
-                        Informations a partir des reseaux sociaux
+                        Twitter
                       </Typography>
                     </Grid>
                     {data.map(stat => (
-                    <Grid className={'Twitter'} item lg={8} md={8} xl={8} xs={12} style={{display:'none'}}>
+                      
+                      <Grid className={'Twitter'} item lg={8} md={8} xl={8} xs={12} style={{display:'none'}}>
                         <Post {...stat}/>
-                    </Grid>
+                      </Grid>
                      ))}
                     <Grid id='firstTwitter' item lg={8} md={8} xl={8} xs={12}>
-                        <Post {...data[0]}/>
+                        
                     </Grid>
                     <Grid item lg={4} md={4} xl={4} xs={12}>
                        <Card className={classes.root} style={{boxShadow: '0px 2px 23px -14px rgba(204,204,238,0.75)',borderRadius:'5px'}}>
@@ -345,6 +348,7 @@ export default function EnhancedTable() {
                                     const labelId = `enhanced-table-checkbox-${index}`;
                                     var date =new Date(row.timestamp).toLocaleString();
                                     return (
+                                      
                                         <TableRow
                                         hover
                                         onClick={event => handleClick(event, idx)}
