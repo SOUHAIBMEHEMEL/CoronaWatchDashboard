@@ -239,7 +239,7 @@ export default function EnhancedTable() {
 
   const handleSelectAllClick = event => {
     if (event.target.checked) {
-      const newSelecteds = rows.map(n => n.name);
+      const newSelecteds = rows.map(n => n.idArticle);
       setSelected(newSelecteds);
       return;
     }
@@ -248,6 +248,8 @@ export default function EnhancedTable() {
 
   const handleClick = (event, name) => {
     const selectedIndex = selected.indexOf(name);
+    console.log('index=   ',name);
+    //afficher article of index=name
     let newSelected = [];
 
     if (selectedIndex === -1) {
@@ -264,6 +266,7 @@ export default function EnhancedTable() {
     }
 
     setSelected(newSelected);
+    console.log('index=   ',newSelected);
   };
 
   const handleChangePage = (event, newPage) => {
@@ -303,17 +306,17 @@ export default function EnhancedTable() {
               {stableSort(rows, getComparator(order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => {
-                  const isItemSelected = isSelected(row.name);
+                  const isItemSelected = isSelected(row.idArticle);
                   const labelId = `enhanced-table-checkbox-${index}`;
 
                   return (
                     <TableRow
                       hover
-                      onClick={event => handleClick(event, row.name)}
+                      onClick={event => handleClick(event, row.idArticle)}
                       role="checkbox"
                       aria-checked={isItemSelected}
                       tabIndex={-1}
-                      key={row.name}
+                      key={row.idArticle}
                       selected={isItemSelected}
                     >
                       <TableCell padding="checkbox">

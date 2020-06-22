@@ -1,4 +1,5 @@
 import React from 'react';
+import axios from 'axios';
 import PropTypes from 'prop-types';
 import Async from 'react-async';
 import Grid from '@material-ui/core/Grid';
@@ -141,6 +142,19 @@ const EnhancedTableToolbar = props => {
   const classes = useToolbarStyles();
   const { numSelected } = props;
 
+
+  const refresh = (event) => {
+    axios.get('https://corona-watch-esi.herokuapp.com/scrapping/tweets/')
+    .then((response) => {
+      rows=response;
+      console.log(rows);
+    }, (error) => {
+      console.log(error);
+    });
+  }
+
+  
+
   return (
     <Toolbar
       className={clsx(classes.root, {
@@ -177,8 +191,8 @@ const EnhancedTableToolbar = props => {
           </IconButton>
         </Tooltip>
       ) : (
-        <Tooltip title="Filter list" style={{position:'absolute', top:'10%',right:'2%'}}>
-          <IconButton aria-label="filter list">
+        <Tooltip title="Refresh" style={{position:'absolute', top:'10%',right:'2%'}}>
+          <IconButton onClick={event => refresh(event)} aria-label="refresh">
             <RefreshIcon/>
           </IconButton>
         </Tooltip>
@@ -297,6 +311,7 @@ export default function EnhancedTable() {
           if (err) return `Something went wrong: ${err.message}`
 
           if (data){
+            console.log('ROWS: ' , rows);
             rows=data;
             emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
             return (

@@ -30,9 +30,8 @@ import ListItemText from '@material-ui/core/ListItemText';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import Avatar from '@material-ui/core/Avatar';
 import Dashboard from './dashboard/Dashboard'; 
-import Test from './test_fonctionnel_article/GestionArticles';
+import Test from './test_fonctionnel_article/GestionArticles1';
 import Statistiques from './statistiques/InfoReseaux';
-import MonCompte from './dashboard/Dashboard';
 import GestionDesArticles from './GestionArticles/GestionArticles';
 import InfosReseaux from './infosReseaux/InfoReseaux'
 import DailyMotion from './dailyMotion/InfoReseaux'
