@@ -21,11 +21,46 @@ import Post from './post/Post';
 import { Card } from '@material-ui/core';
 import TwitterIcon from '@material-ui/icons/Twitter';
 import mock from './data'
+import Button from '@material-ui/core/Button';
 
 var rows ;
 
 
-// load data
+const validerArticle = (event, data, idx) => {
+  const data1 ={
+   "verified": true,
+  }
+
+  axios.patch('https://corona-watch-esi.herokuapp.com/scrapping/tweets/'+data.id, data1)
+  .then((response) => {
+    console.log(response);
+    var validerBtn=document.getElementsByClassName('validerBtnTwitter');
+    validerBtn[idx].style.display='none';
+    var validerBtn=document.getElementsByClassName('validerBtnTwitterDisabled');
+    validerBtn[idx].style.display='block';
+  }, (error) => {
+    console.log(error);
+  });
+}
+
+const supprimerPost = (event, data, idx) => {
+  const data1 ={
+    "deleted": true,
+   }
+
+   axios.patch('https://corona-watch-esi.herokuapp.com/scrapping/tweets/'+data.id, data1)
+   .then((response) => {
+     console.log(response);
+     var supprimerBtn=document.getElementsByClassName('supprimerBtnTwitter');
+     supprimerBtn[idx].style.display='none';
+     var supprimerBtn=document.getElementsByClassName('supprimerBtnTwitterDisabled');
+     supprimerBtn[idx].style.display='block';
+   }, (error) => {
+     console.log(error);
+   });
+  
+}
+
 
 
 function descendingComparator(a, b, orderBy) {
@@ -55,8 +90,9 @@ function stableSort(array, comparator) {
 }
 
 const headCells = [
-  { id: 'titreArticle', numeric: false, disablePadding: true, label: 'Date' },
-  { id: 'agentDeSante', numeric: false, disablePadding: false, label: 'Site' },
+  { id: 'date', numeric: false, disablePadding: true, label: 'Date' },
+  { id: 'valider', numeric: false, disablePadding: false, label: '' },
+  { id: 'supprimer', numeric: false, disablePadding: false, label: '' },
 ];
 
 function EnhancedTableHead(props) {
@@ -161,7 +197,7 @@ const useStyles = makeStyles(theme => ({
   },
   paper: {
     width: '100%',
-    marginBottom: theme.spacing(2),
+    marginBottom: 0,
   },
   table: {
     width: '100%',
@@ -253,24 +289,24 @@ export default function Enhanced(props) {
   return (
     <div className={classes.root}>
     <Grid container spacing={3}>
-        <Grid container item lg={12} md={12} xl={12} xs={12}>
+        <Grid container item lg={8} md={8} xl={8} xs={8} style={{top:'5px', zIndex:'9999', position:'fixed'}}>
           <Card style={{height:'30px', width:'30px', backgroundColor:'#4E73DF', borderRadius:'5px',boxShadow: '1px 2px 11px -1px rgba(164,164,208,0.75)',}}>
             <TwitterIcon style={{color:'#ffffff',height:'16px', width:'16px', marginTop:'7px', marginLeft:'7px' }}/>
           </Card>
-          <Typography variant='h6' style={{textAlign:'left', marginLeft:'10px',}}>
+          <Typography variant='h5' style={{textAlign:'left', marginLeft:'15px',}}>
             Twitter
           </Typography>
         </Grid>
         {data.map(stat => (
           
-          <Grid className={'Twitter'} item lg={8} md={8} xl={8} xs={12} style={{display:'none'}}>
+          <Grid className={'Twitter'} item lg={6} md={6} xl={6} xs={12} style={{display:'none'}}>
             <Post {...stat}/>
           </Grid>
          ))}
-        <Grid id='firstTwitter' item lg={8} md={8} xl={8} xs={12}>
+        <Grid id='firstTwitter' item lg={6} md={6} xl={6} xs={12}>
             
         </Grid>
-        <Grid item lg={4} md={4} xl={4} xs={12}>
+        <Grid item lg={6} md={6} xl={6} xs={12}>
            <Card className={classes.root} style={{boxShadow: '0px 2px 23px -14px rgba(204,204,238,0.75)',borderRadius:'5px'}}>
              <Paper className={classes.paper}>
                 <EnhancedTableToolbar numSelected={selected.length} />
@@ -310,10 +346,26 @@ export default function Enhanced(props) {
                             selected={isItemSelected}
                             >
                           
-                            <TableCell paddingLeft='20' component="th" id={labelId} scope="row" style={{width:'20%'}}>
+                            <TableCell paddingLeft='20' component="th" id={labelId} scope="row" style={{width:'50%',}}>
                                 {date}
                             </TableCell>
-                            <TableCell align="left" style={{width:'20%'}}>Twitter</TableCell>
+
+                            <TableCell align="left" style={{width:'20%'}}>
+                            {!row.verified ? 
+                              <Button className={'validerBtnTwitter'} variant="contained" color="primary" style={{backgroundColor:'#4E73DF',}} onClick={event => validerArticle(event, row, idx)}>
+                                  Valider
+                              </Button>: <Button className={'validerBtnTwitter'} variant="contained" disabled>valider</Button>}
+                              <Button className={'validerBtnTwitterDisabled'} variant="contained" style={{ display:'none'}} disabled>verifier</Button>
+                            </TableCell>
+
+                            <TableCell align="left" style={{width:'20%'}}>
+                            {!row.verified ? 
+                              <Button className={'supprimerBtnTwitter'} variant="contained" color="secondary" onClick={event => supprimerPost(event, row, idx)}>
+                                  Supprimer
+                              </Button>: <Button className={'supprimerBtnTwitter'} variant="contained" disabled>Supprimer</Button>}
+                              <Button className={'supprimerBtnTwitterDisabled'} variant="contained" style={{ display:'none'}} disabled>Supprimer</Button>
+                            </TableCell>
+
                             </TableRow>
                         );
                         })}

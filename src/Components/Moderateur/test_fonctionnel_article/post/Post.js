@@ -84,33 +84,9 @@ export default function RecipeReviewCard(props) {
         })
   }
   
-  const supprimerPost = (event, id) => {
-    const data1 ={
-      "deleted": true,
-     }
- 
-     axios.patch('https://corona-watch-esi.herokuapp.com/scrapping/tweets/'+data.id, data1)
-     .then((response) => {
-       console.log(response);
-     }, (error) => {
-       console.log(error);
-     });
-    
-  }
+  
 
-  const validerArticle = (event, data) => {
-    const data1 ={
-     "verified": true,
-    }
-
-    axios.patch('https://corona-watch-esi.herokuapp.com/scrapping/tweets/'+data.id, data1)
-    .then((response) => {
-      console.log(response);
-    }, (error) => {
-      console.log(error);
-    });
-  }
-
+  
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
@@ -118,16 +94,6 @@ export default function RecipeReviewCard(props) {
 
   return (
     <Card className={classes.root}>
-      <div style={{position:'absolute',marginTop:'15px', marginLeft:'300px'}}>
-          {!data.verified ? 
-          <Button id='validerBtn' variant="contained" color="primary" style={{backgroundColor:'#4E73DF', marginRight:'10px'}} onClick={event => validerArticle(event, data)}>
-              Valider
-          </Button>: <Button variant="contained" style={{marginRight:'10px'}} disabled>verifie</Button>}
-          {!data.deleted ? 
-          <Button id='supprimerBtn' variant="contained" color="secondary" onClick={event => supprimerPost(event, data.id)}>
-              Supprimer
-          </Button>: <Button variant="contained" disabled>Supprime</Button>}
-        </div>
       <CardHeader style={{textAlign:'left'}}
         avatar={
           <Avatar src={"../../images/socialMedia/twitter.png"}>

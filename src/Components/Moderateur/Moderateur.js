@@ -39,6 +39,7 @@ import GestionPostsUtilisateurs from './postsUtilisateurs/GestionPostsUtilisateu
 import {Link} from 'react-router-dom';
 import YouTubeIcon from '@material-ui/icons/YouTube';
 import TwitterIcon from '@material-ui/icons/Twitter';
+import Typography from '@material-ui/core/Typography';
 
 const drawerWidth = 240;
 
@@ -56,13 +57,14 @@ const useStyles = makeStyles(theme => ({
       duration: theme.transitions.duration.leavingScreen,
     }),
     backgroundColor:'#ffffff',
-    height: '50px',
-    boxShadow: '0px -3px 10px 0px rgba(204,204,238,0.75)',
+    height: '65px',
+    paddingTop:'5px',
+    boxShadow: '0px -3px 10px 0px rgba(204,204,238,0.0)',
   },
   appBarShift: {
     width: `calc(100% - ${drawerWidth}px)`,
     marginLeft: drawerWidth,
-    backgroundColor:'#ffffff',
+    backgroundColor:'#F3F3FA',
     transition: theme.transitions.create(['margin', 'width'], {
       easing: theme.transitions.easing.easeOut,
       duration: theme.transitions.duration.enteringScreen,
@@ -74,7 +76,6 @@ const useStyles = makeStyles(theme => ({
   menuItem: {
     color:'#ffffff',
     fontSize:'15px',
-    fontWeight:'2%',
   },
   menuRow:{
     '&:hover':{backgroundColor:'rgba(255,255,255,.1)',},
@@ -93,30 +94,31 @@ const useStyles = makeStyles(theme => ({
     '&:hover':{backgroundColor:'rgba(255,255,255,.1)',}
   },
   profilePhoto: {
+    boxShadow: '1px 2px 11px -1px rgba(204,204,218,0.85)',
+    background:'#ffffff',
     marginLeft:'10px',
-    marginTop: '6px',
+    marginTop: '10px',
     height:'40px',
     width:'40px'
   },
   small: {
-    width: theme.spacing(4),
-    height: theme.spacing(4),
-    border:'1px #EEEEEE solid'
+    width: '34px',
+    height: '34px',
   },
   NotificationsBtn:{
-    marginTop:'8px',
+    boxShadow: '1px 2px 11px -1px rgba(204,204,218,0.85)',
+    background:'#ffffff',
+    marginTop:'10px',
     marginRight:'10px',
-    height:'37px',
-    width:'37px'
+    height:'40px',
+    width:'40px'
   },
   search: {
     position: 'relative',
     borderTopLeftRadius:'5px',
     borderBottomLeftRadius:'5px',
     backgroundColor: fade('#CCCCDD', 0.2),
-    '&:hover': {
-      backgroundColor: fade('#CCCCDD', 0.3),
-    },
+    '&:hover': {backgroundColor: fade('#CCCCDD', 0.3),},
     
     left: '-16px',
     width: '100%',
@@ -155,7 +157,7 @@ const useStyles = makeStyles(theme => ({
   },
   sectionDesktop: {
     position:'fixed',
-    right: '2.5%',
+    right: '40px',
     display: 'none',
     [theme.breakpoints.up('md')]: {
       display: 'flex',
@@ -186,9 +188,11 @@ const useStyles = makeStyles(theme => ({
 
   },
   content: {
-    backgroundColor: fade('#CCCCFE', 0.15),
+    backgroundColor: '#F3F3FA',
     flexGrow: 1,
-    padding: theme.spacing(3),
+    paddingLeft: theme.spacing(3),
+    paddingRight:theme.spacing(3),
+    paddingTop:'45px',
     transition: theme.transitions.create('margin', {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
@@ -263,24 +267,12 @@ export default function PersistentDrawerLeft() {
           >
             <MenuIcon color="action" />
           </IconButton>
-          <div className={classes.search}>
-            <InputBase 
-              placeholder="Search…"
-              classes={{
-                root: classes.inputRoot,
-                input: classes.inputInput,
-              }}
-              inputProps={{ 'aria-label': 'search' }}
-            />
-            <div className={classes.searchIcon}>
-              <SearchIcon style={{color:"#ffffff",}} />
-            </div>
-          </div>
+          
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
-            <IconButton aria-label="show new notifications" color="inherit" className={classes.NotificationsBtn}>
-              <Badge badgeContent={1} color="secondary">
-                <NotificationsIcon  color='action' />
+            <IconButton aria-label="show new notifications" className={classes.NotificationsBtn}>
+              <Badge>
+                <NotificationsIcon  style={{color:'#666'}} />
               </Badge>
             </IconButton>
             <IconButton className={classes.profilePhoto}
@@ -288,7 +280,6 @@ export default function PersistentDrawerLeft() {
               aria-label="account of current user"
               aria-controls={menuId}
               aria-haspopup="true"
-              color="action"
             >
               <Avatar alt="Remy Sharp" src="/images/face16.jpg" className={classes.small}/>
             </IconButton>
@@ -325,7 +316,8 @@ export default function PersistentDrawerLeft() {
               <ListItemIcon className={classes.menuItem}>
                 {chooseIncon(index)}
               </ListItemIcon>
-              <ListItemText  primary={text} className={classes.menuItem} /> 
+              <Typography className={classes.menuItem} >{text}</Typography>
+               
             </ListItem>
           ))}
         </List>
@@ -337,7 +329,7 @@ export default function PersistentDrawerLeft() {
               <ListItemIcon className={classes.menuItem}>
                 <ExitToAppIcon/>
               </ListItemIcon>
-              <Link style={{color:'#ffffff'}} to='/Moderateur/logout'>Se Deconnecter</Link> 
+              <Link style={{color:'#ffffff', fontWeight:'300', fontSize:'16px'}} to='/Moderateur/logout'>Se Deconnecter</Link> 
             </ListItem>
           ))}
         </List>
