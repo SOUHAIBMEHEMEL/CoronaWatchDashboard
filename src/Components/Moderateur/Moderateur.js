@@ -174,8 +174,8 @@ const useStyles = makeStyles(theme => ({
   },
   drawerPaper: {
     width: drawerWidth,
-    background:'#4E73DF',
-    boxShadow: '-3px 52px 10px 0px rgba(204,204,238,0.75)',
+    background:'transparent',
+    borderRight:'1px solid #ffffff',
   },
   drawerHeader: {
     display: 'flex',
@@ -243,9 +243,9 @@ export default function PersistentDrawerLeft() {
     for (let i = 0; i < element.length; i++){
       element[i].style.display = "none";
       menuElement[i].style.borderLeft = '5px solid transparent'; 
-      menuElement[i].style.background= "#4E73DF";
+      menuElement[i].style.background= "transparent";
     }
-    menuElement[index].style.background= "rgba(0,0,100,.15)";
+    menuElement[index].style.background= "rgba(200,200,200,.15)";
     element[index].style.display = "block";
     menuElement[index].style.borderLeft = '5px solid #fff';
   }
@@ -323,7 +323,7 @@ export default function PersistentDrawerLeft() {
             </ListItem>
           ))}
         </List>
-        <Divider style={{ backgroundColor:'#fff', marginTop:'10px'}} />
+        <Divider style={{ backgroundColor:'transparent', marginTop:'20px'}} />
 
         <List>
           {[' Déconnexion'].map((text, index) => (

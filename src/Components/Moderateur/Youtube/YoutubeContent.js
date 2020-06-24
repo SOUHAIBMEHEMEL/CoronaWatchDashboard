@@ -273,10 +273,10 @@ export default function EnhancedTable(props) {
     <div className={classes.root}>
       <Grid container spacing={3}>
       <Grid container item lg={8} md={8} xl={8} xs={8} style={{top:'5px', zIndex:'9999', position:'fixed'}}>
-          <Card style={{height:'30px', width:'30px', backgroundColor:'#4E73DF', borderRadius:'5px',boxShadow: '1px 2px 11px -1px rgba(164,164,208,0.75)',}}>
-            <YouTubeIcon style={{color:'#ffffff',height:'16px', width:'16px', marginTop:'7px', marginLeft:'7px' }}/>
+          <Card style={{height:'30px', width:'30px', backgroundColor:'#fff', borderRadius:'5px',boxShadow: '1px 2px 11px -1px rgba(164,164,208,0.75)',}}>
+            <YouTubeIcon style={{color:'#666',height:'16px', width:'16px', marginTop:'7px', marginLeft:'7px' }}/>
           </Card>
-          <Typography variant='h5' style={{textAlign:'left', marginLeft:'15px',}}>
+          <Typography variant='h5' style={{textAlign:'left', marginLeft:'15px',color:'#fff'}}>
             Nouveautes Sur Youtube
           </Typography>
         </Grid>
