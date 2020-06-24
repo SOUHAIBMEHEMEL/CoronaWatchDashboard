@@ -32,3 +32,8 @@
     transform: rotate(360deg);
   }
 }
+
+#AppRoot{
+  background: url('./covid19.png') no-repeat center center;
+  background-size: cover;
+}

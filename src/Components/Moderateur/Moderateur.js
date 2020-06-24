@@ -30,16 +30,17 @@ import ListItemText from '@material-ui/core/ListItemText';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import Avatar from '@material-ui/core/Avatar';
 import Dashboard from './dashboard/Dashboard'; 
-import Test from './test_fonctionnel_article/GestionArticles1';
-import Statistiques from './statistiques/InfoReseaux';
+import Test from './GestionZones/Twitter';
+import Twitter from './Twitter/Twitter';
 import GestionDesArticles from './GestionArticles/GestionArticles';
-import InfosReseaux from './infosReseaux/InfoReseaux'
+import Youtube from './Youtube/Youtube';
 import DailyMotion from './dailyMotion/InfoReseaux'
 import GestionPostsUtilisateurs from './postsUtilisateurs/GestionPostsUtilisateurs';
 import {Link} from 'react-router-dom';
 import YouTubeIcon from '@material-ui/icons/YouTube';
 import TwitterIcon from '@material-ui/icons/Twitter';
 import Typography from '@material-ui/core/Typography';
+import '../../App.css';
 
 const drawerWidth = 240;
 
@@ -64,7 +65,7 @@ const useStyles = makeStyles(theme => ({
   appBarShift: {
     width: `calc(100% - ${drawerWidth}px)`,
     marginLeft: drawerWidth,
-    backgroundColor:'#F3F3FA',
+    backgroundColor:'transparent',
     transition: theme.transitions.create(['margin', 'width'], {
       easing: theme.transitions.easing.easeOut,
       duration: theme.transitions.duration.enteringScreen,
@@ -188,11 +189,12 @@ const useStyles = makeStyles(theme => ({
 
   },
   content: {
-    backgroundColor: '#F3F3FA',
+    backgroundColor: 'transparent',
     flexGrow: 1,
     paddingLeft: theme.spacing(3),
     paddingRight:theme.spacing(3),
     paddingTop:'45px',
+    paddingBottom: '30px',
     transition: theme.transitions.create('margin', {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
@@ -249,7 +251,7 @@ export default function PersistentDrawerLeft() {
   }
 
   return (
-    <div className={classes.root}>
+    <div id='AppRoot' className={classes.root}>
       <CssBaseline />
       <AppBar
         position="fixed"
@@ -316,7 +318,7 @@ export default function PersistentDrawerLeft() {
               <ListItemIcon className={classes.menuItem}>
                 {chooseIncon(index)}
               </ListItemIcon>
-              <Typography className={classes.menuItem} >{text}</Typography>
+              <ListItemText className={classes.menuItem} >{text}</ListItemText>
                
             </ListItem>
           ))}
@@ -353,10 +355,10 @@ export default function PersistentDrawerLeft() {
           <GestionPostsUtilisateurs />         
         </Grid>
         <Grid className={'contentModerateur'} style={{display:'none'}} item lg={12} md={12}>
-          <InfosReseaux />         
+          <Youtube/>         
         </Grid>
         <Grid className={'contentModerateur'} style={{display:'none'}} item lg={12} md={12}>
-          <Statistiques/>         
+          <Twitter/>         
         </Grid>
         <Grid className={'contentModerateur'} style={{display:'none'}} item lg={12} md={12}>
           <DailyMotion />         

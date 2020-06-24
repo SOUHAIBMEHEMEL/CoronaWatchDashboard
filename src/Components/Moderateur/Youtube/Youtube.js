@@ -1,0 +1,48 @@
+import React from 'react';
+import GestionArticles from './YoutubeContent';
+import RefreshIcon from '@material-ui/icons/Refresh';
+import IconButton from '@material-ui/core/IconButton';
+import Tooltip from '@material-ui/core/Tooltip';
+import Loader from 'react-loader-spinner';
+
+
+
+export default class BookList extends React.Component {
+  state = {
+      isLoaded: false,
+      books: []
+  }
+
+  componentDidMount() {
+    fetch('https://corona-watch-esi.herokuapp.com/scrapping/youtube-videos/')
+    .then((response) => response.json())
+    .then(booksList => {
+        this.setState({ books: booksList, isLoaded: true, });
+    });
+  }
+  
+  fetchBooks = () => {
+      fetch('https://corona-watch-esi.herokuapp.com/scrapping/youtube-videos/')
+      .then((response) => response.json())
+      .then(booksList => {
+          this.setState({ books: booksList });
+      });
+  }
+  
+  render() {
+    return (
+      <div>
+        {this.state.isLoaded && (
+          <div>
+          <Tooltip title="Refresh" style={{position:'fixed', top:'13px',right:'150px',backgroundColor:'#fff', zIndex:9999, height:'40px', width:'40px', boxShadow: '1px 2px 11px -1px rgba(204,204,218,0.85)',}}>
+            <IconButton onClick={this.fetchBooks} aria-label="refresh" >
+              <RefreshIcon style={{color:'#666',}}/>
+            </IconButton>
+          </Tooltip>
+          <GestionArticles {...this.state.books}></GestionArticles>
+          </div>
+        )};
+      </div>
+    )
+  }
+}
