@@ -26,7 +26,7 @@ const useStyles = makeStyles(theme => ({
     width: 56
   },
   icon: {
-    color: '#888',
+    color: '#4E73DF',
     height: 45,
     width: 45
   },

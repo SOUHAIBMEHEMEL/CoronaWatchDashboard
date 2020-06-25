@@ -15,6 +15,7 @@ import mock from './data'
 import mock1 from './test.json'
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import { Card } from '@material-ui/core';
+import '../../../App.css';
 
 // load data
 const loadData = () =>
@@ -63,7 +64,17 @@ export default function PersistentDrawerLeft() {
                     </Grid>
                   ))}
 
-                  <Grid item lg={6} md={6} xl={3} xs={12}>
+                  <Grid  item lg={6} md={6} xl={3} xs={12}>
+                  <Card style={{paddingTop:'0px', height:'100%', width:'100%', backgroundColor:'#fff', borderRadius:'20px',boxShadow: '1px 2px 11px -1px rgba(54,54,118,0.75)',}}>
+                  <Typography variant='h6' style={{textAlign:'left', padding:'15px'}}>
+                    Map Des Zones Declarees
+                  </Typography>
+                  <div id='mapContainer'>
+                      <div id='divMap'>
+                        <Map/>
+                      </div>
+                    </div>
+                  </Card>
                     
                   </Grid>
                   <Grid item lg={6} md={12} xl={9} xs={12}>
