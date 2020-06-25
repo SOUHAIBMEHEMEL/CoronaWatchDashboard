@@ -1,5 +1,4 @@
 import React from 'react';
-import axios from 'axios';
 import PropTypes from 'prop-types';
 import Async from 'react-async';
 import Grid from '@material-ui/core/Grid';
@@ -8,7 +7,6 @@ import { lighten, makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import GroupIcon from '@material-ui/icons/Group';
 import TableBody from '@material-ui/core/TableBody';
-import YouTubeIcon from '@material-ui/icons/YouTube';
 import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
@@ -27,8 +25,9 @@ import RefreshIcon from '@material-ui/icons/Refresh';
 import StyledBadge from '@material-ui/core/Badge';
 import Post from './post/Post';
 import { Card } from '@material-ui/core';
-import mock from './data'
+import axios from 'axios';
 import Button from '@material-ui/core/Button';
+import mock from './data'
 
 var rows ;
 
@@ -37,12 +36,12 @@ const validerArticle = (event, data, idx) => {
    "verified": true,
   }
 
-  axios.patch('https://corona-watch-esi.herokuapp.com/scrapping/youtube-videos/'+data.id, data1)
+  axios.patch('https://corona-watch-esi.herokuapp.com/content/videos/'+data.id, data1)
   .then((response) => {
     console.log(response);
-    var validerBtn=document.getElementsByClassName('validerBtnYoutube');
+    var validerBtn=document.getElementsByClassName('validerBtnPostUser');
     validerBtn[idx].style.display='none';
-    var validerBtn=document.getElementsByClassName('validerBtnYoutubeDisabled');
+    var validerBtn=document.getElementsByClassName('validerBtnPostUserDisabled');
     validerBtn[idx].style.display='block';
   }, (error) => {
     console.log(error);
@@ -54,12 +53,12 @@ const supprimerPost = (event, data, idx) => {
     "deleted": true,
    }
 
-   axios.patch('https://corona-watch-esi.herokuapp.com/scrapping/youtube-videos/'+data.id, data1)
+   axios.patch('https://corona-watch-esi.herokuapp.com/content/videos/'+data.id, data1)
    .then((response) => {
      console.log(response);
-     var supprimerBtn=document.getElementsByClassName('supprimerBtnYoutube');
+     var supprimerBtn=document.getElementsByClassName('supprimerBtnPostUser');
      supprimerBtn[idx].style.display='none';
-     var supprimerBtn=document.getElementsByClassName('supprimerBtnYoutubeDisabled');
+     var supprimerBtn=document.getElementsByClassName('supprimerBtnPostUserDisabled');
      supprimerBtn[idx].style.display='block';
    }, (error) => {
      console.log(error);
@@ -76,7 +75,6 @@ function descendingComparator(a, b, orderBy) {
   }
   return 0;
 }
-
 
 function getComparator(order, orderBy) {
   return order === 'desc'
@@ -95,9 +93,10 @@ function stableSort(array, comparator) {
 }
 
 const headCells = [
-  { id: 'titreArticle', numeric: false, disablePadding: true, label: 'Date' },
-  { id: 'valider', numeric: false, disablePadding: false, label: '' },
-  { id: 'supp', numeric: false, disablePadding: false, label: '' },
+  { id: 'Date', numeric: true, disablePadding: false, label: 'Date' },
+  { id: 'agentDeSante', numeric: false, disablePadding: false, label: 'Utilisateur' },
+  { id: 'supr', numeric: true, disablePadding: false, label: "" },
+  { id: 'valide', numeric: true, disablePadding: false, label: '' },
 ];
 
 function EnhancedTableHead(props) {
@@ -111,10 +110,10 @@ function EnhancedTableHead(props) {
       <TableRow>
         {headCells.map(headCell => (
           <TableCell
-            key={headCell.id}
-            align= 'left'
-            paddingLeft='20'
-            sortDirection={orderBy === headCell.id ? order : false}
+          key={headCell.id}
+          align= 'left'
+          paddingLeft='30'
+          sortDirection={orderBy === headCell.id ? order : false}
           >
             <TableSortLabel 
               active={orderBy === headCell.id}
@@ -185,7 +184,7 @@ const EnhancedTableToolbar = props => {
         </Typography>
       ) : (
         <Typography className={classes.title} variant="h6" id="tableTitle" style={{position:'absolute', top:'20%',left:'3.4%'}}>
-          Liste Des Videos Youtube Ajoutees
+          Liste Des Posts Des Utilisateurs
         </Typography>
       )}
 
@@ -248,8 +247,8 @@ export default function EnhancedTable(props) {
   };
 
   const handleClick = (event, name) => {
-    var x=document.getElementsByClassName('Youtube');
-    document.getElementById('firstYoutube').style.display='none';
+    var x=document.getElementsByClassName('Post');
+    document.getElementById('firstPost').style.display='none';
     for(let i=0;i<x.length; i++){x[i].style.display='none';}
     x[name].style.display='block';
   };
@@ -271,100 +270,103 @@ export default function EnhancedTable(props) {
 
   return (
     <div className={classes.root}>
-      <Grid container spacing={3}>
-        <Grid container item lg={8} md={8} xl={8} xs={8} style={{top:'5px', zIndex:'9999', position:'fixed'}}>
-          <Card style={{height:'40px', width:'40px', backgroundColor:'#fff', borderRadius:'20px',boxShadow: '1px 2px 11px -1px rgba(204,204,208,0.85)',}}>
-            <YouTubeIcon style={{color:'#666',height:'26px', width:'26px', marginTop:'7px', marginLeft:'7px' }}/>
-          </Card>
-          <Typography variant='h5' style={{textAlign:'left', marginLeft:'15px',color:'#fff', paddingTop:'5px'}}>
-            Nouveautes Sur Youtube
-          </Typography>
+    <Grid container spacing={3}>
+      <Grid container item lg={8} md={8} xl={8} xs={8} style={{top:'5px', zIndex:'9999', position:'fixed'}}>
+        <Card style={{height:'40px', width:'40px', backgroundColor:'#fff', borderRadius:'20px',boxShadow: '1px 2px 11px -1px rgba(204,204,208,0.85)',}}>
+          <GroupIcon style={{color:'#666',height:'26px', width:'26px', marginTop:'7px', marginLeft:'7px' }}/>
+        </Card>
+        <Typography variant='h5' style={{textAlign:'left', marginLeft:'15px',color:'#fff', paddingTop:'5px'}}>
+        Gestion Des Postes Utilisateurs
+        </Typography>
+      </Grid>
+
+        {data.map(stat => (
+        <Grid className={'Post'} item lg={6} md={6} xl={3} xs={12} style={{display:'none'}}>
+            <Post {...stat}/>
         </Grid>
-          {data.map(stat => (
-          <Grid className={'Youtube'} item lg={7} md={7} xl={7} xs={12} style={{display:'none'}}>
-              <Post {...stat}/>
-          </Grid>
-           ))}
-          <Grid id='firstYoutube' item lg={7} md={7} xl={7} xs={12}>
-              
-          </Grid>
-          <Grid item lg={5} md={5} xl={5} xs={12}>
-             <Card className={classes.root} style={{boxShadow: '0px 2px 23px -14px rgba(204,204,238,0.75)',borderRadius:'20px',}}>
-               <Paper className={classes.paper}>
-                  <EnhancedTableToolbar numSelected={selected.length} />
-                  <TableContainer>
-                  <Table
-                      className={classes.table}
-                      aria-labelledby="tableTitle"
-                      size={dense ? 'small' : 'medium'}
-                      aria-label="enhanced table"
-                  >
-                      <EnhancedTableHead
-                      classes={classes}
-                      numSelected={selected.length}
-                      order={order}
-                      orderBy={orderBy}
-                      onRequestSort={handleRequestSort}
-                      rowCount={rows.length}
-                      />
-                      <TableBody>
-                      {stableSort(data, getComparator(order, orderBy))
-                          .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                          .map((row, index) => {
-                          const idx = index;
-                          const labelId = `enhanced-table-checkbox-${index}`;
-                          var date =new Date(row.timestamp).toLocaleString();
-                          return (
-                              <TableRow
-                              hover
-                              onClick={event => handleClick(event, idx)}
-                              key={idx}
-                              >
+         ))}
+        <Grid id='firstPost' item lg={6} md={6} xl={3} xs={12}>
+            <Post {...data[0]}/>
+        </Grid>
+        <Grid item lg={6} md={12} xl={9} xs={12}>
+           <Card className={classes.root} style={{boxShadow: '0px 2px 23px -14px rgba(204,204,238,0.75)',borderRadius:'20px'}}>
+             <Paper className={classes.paper}>
+                <EnhancedTableToolbar numSelected={selected.length} />
+                <TableContainer>
+                <Table
+                    className={classes.table}
+                    aria-labelledby="tableTitle"
+                    size={dense ? 'small' : 'medium'}
+                    aria-label="enhanced table"
+                >
+                    <EnhancedTableHead
+                    classes={classes}
+                    numSelected={selected.length}
+                    order={order}
+                    orderBy={orderBy}
+                    onSelectAllClick={handleSelectAllClick}
+                    onRequestSort={handleRequestSort}
+                    rowCount={rows.length}
+                    />
+                    <TableBody>
+                    {stableSort(data, getComparator(order, orderBy))
+                        .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                        .map((row, index) => {
+                        const idx = index;
+                        const isItemSelected = isSelected(idx);
+                        const labelId = `enhanced-table-checkbox-${index}`;
+                        var date =new Date(row.timestamp).toLocaleString();
+                        return (
+                            <TableRow
+                            hover
+                            onClick={event => handleClick(event, idx)}
+                            key={idx}
                             
-                              <TableCell paddingLeft='20' component="th" id={labelId} scope="row" style={{width:'50%'}}>
-                                  {date}
-                              </TableCell>
-                              
+                            >
+                            
+                            <TableCell align="left" padding="none" style={{width:'20%', paddingLeft:'20px'}}>{date}</TableCell>
+                            <TableCell align="left" style={{width:'20%',paddingLeft:'20px'}}>{row.user.username}</TableCell>
+
                             <TableCell align="left" >
                             {!row.verified ? 
-                              <Button className={'validerBtnYoutube'} variant="contained" color="primary" style={{backgroundColor:'#4E73DF',}} onClick={event => validerArticle(event, row, idx)}>
+                              <Button className={'validerBtnPostUser'} variant="contained" color="primary" style={{backgroundColor:'#4E73DF',borderRadius:'25px'}} onClick={event => validerArticle(event, row, idx)}>
                                   Valider
-                              </Button>: <Button className={'validerBtnYoutube'} variant="contained" disabled>valider</Button>}
-                              <Button className={'validerBtnYoutubeDisabled'} variant="contained" style={{ display:'none'}} disabled>verifier</Button>
+                              </Button>: <Button className={'validerBtnPostUser'} style={{borderRadius:'25px'}} variant="contained" disabled>valider</Button>}
+                              <Button className={'validerBtnPostUserDisabled'} variant="contained" style={{ display:'none',borderRadius:'25px'}} disabled>verifier</Button>
                             </TableCell>
 
                             <TableCell align="left" >
                             {!row.deleted ? 
-                              <Button className={'supprimerBtnYoutube'} variant="contained" color="secondary" onClick={event => supprimerPost(event, row, idx)}>
+                              <Button className={'supprimerBtnPostUser'} variant="contained" color="secondary" style={{borderRadius:'25px'}} onClick={event => supprimerPost(event, row, idx)}>
                                   Supprimer
-                              </Button>: <Button className={'supprimerBtnYoutube'} variant="contained" disabled>Supprimer</Button>}
-                              <Button className={'supprimerBtnYoutubeDisabled'} variant="contained" style={{ display:'none'}} disabled>Supprimer</Button>
-                            </TableCell>
+                              </Button>: <Button className={'supprimerBtnPostUser'} style={{borderRadius:'25px'}} variant="contained" disabled>Supprimer</Button>}
+                              <Button className={'supprimerBtnPostUserDisabled'} variant="contained" style={{ display:'none', borderRadius:'25px'}} disabled >Supprimer</Button>
+                            </TableCell> 
 
-                              </TableRow>
-                          );
-                          })}
-                      {emptyRows > 0 && (
-                          <TableRow style={{ height: (dense ? 33 : 53) * emptyRows }}>
-                          <TableCell colSpan={6} />
-                          </TableRow>
-                      )}
-                      </TableBody>
-                  </Table>
-                  </TableContainer>
-                  <TablePagination
-                  rowsPerPageOptions={[10, 20, 30]}
-                  component="div"
-                  count={rows.length}
-                  rowsPerPage={rowsPerPage}
-                  page={page}
-                  onChangePage={handleChangePage}
-                  onChangeRowsPerPage={handleChangeRowsPerPage}
-                  />
-                </Paper>
-              </Card>
-          </Grid>
-      </Grid>
-  </div>
-  ) 
+                            </TableRow>
+                        );
+                        })}
+                    {emptyRows > 0 && (
+                        <TableRow style={{ height: (dense ? 33 : 53) * emptyRows }}>
+                        <TableCell colSpan={6} />
+                        </TableRow>
+                    )}
+                    </TableBody>
+                </Table>
+                </TableContainer>
+                <TablePagination
+                rowsPerPageOptions={[10, 20, 30]}
+                component="div"
+                count={rows.length}
+                rowsPerPage={rowsPerPage}
+                page={page}
+                onChangePage={handleChangePage}
+                onChangeRowsPerPage={handleChangeRowsPerPage}
+                />
+              </Paper>
+            </Card>
+        </Grid>
+    </Grid>
+</div>
+)
 }

@@ -30,11 +30,11 @@ import ListItemText from '@material-ui/core/ListItemText';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import Avatar from '@material-ui/core/Avatar';
 import Dashboard from './dashboard/Dashboard'; 
-import Test from './GestionZones/Twitter';
+import Test from './dashboard/Dashboard';
 import Twitter from './Twitter/Twitter';
-import GestionDesArticles from './GestionArticles/GestionArticles';
+import GestionDesArticles from './GestionArticles/Articles';
 import Youtube from './Youtube/Youtube';
-import DailyMotion from './dailyMotion/InfoReseaux'
+import DailyMotion from './dailyMotion/DailyMotion'
 import GestionPostsUtilisateurs from './postsUtilisateurs/GestionPostsUtilisateurs';
 import {Link} from 'react-router-dom';
 import YouTubeIcon from '@material-ui/icons/YouTube';
@@ -76,7 +76,6 @@ const useStyles = makeStyles(theme => ({
   },
   menuItem: {
     color:'#ffffff',
-    fontSize:'12px',
   },
   menuRow:{
     '&:hover':{backgroundColor:'rgba(255,255,255,.1)',},
@@ -317,15 +316,15 @@ export default function PersistentDrawerLeft() {
             </ListItem>
           ))}
         </List>
-        <Divider style={{ backgroundColor:'transparent', marginTop:'20px'}} />
+        <Divider style={{width:'70%', marginLeft:'15%',backgroundColor:'#fff', marginBottom:'10px', marginTop:'30px'}} />
 
         <List>
           {[' Déconnexion'].map((text, index) => (
             <ListItem button key={text}>
-              <ListItemIcon className={classes.menuItem}>
+              <ListItemIcon className={classes.menuItem} style={{paddingLeft:'17px'}}>
                 <ExitToAppIcon/>
               </ListItemIcon>
-              <Link style={{color:'#ffffff', fontWeight:'300', fontSize:'16px'}} to='/Moderateur/logout'>Se Deconnecter</Link> 
+              <Link style={{color:'#ffffff', fontWeight:'300', fontSize:'16px', paddingTop:'3px'}} to='/Moderateur/logout'>Se Deconnecter</Link> 
             </ListItem>
           ))}
         </List>

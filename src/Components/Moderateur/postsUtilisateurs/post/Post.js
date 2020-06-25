@@ -80,39 +80,6 @@ export default function RecipeReviewCard(props) {
           console.log(res.data);
         })
   }
-  
-  const supprimerPost = (event, id) => {
-    console.log('id= ',id);
-    axios.delete('https://corona-watch-esi.herokuapp.com/content/videos/'+id)
-    .then((response) => {
-      console.log(response);
-      document.getElementById('supprimerBtn').style.display='none';
-    }, (error) => {
-      console.log(error);
-    });
-    
-  }
-
-  const validerArticle = (event, data) => {
-    console.log('id= ',data.id);
-    const data1 ={
-      // "id": data.id,
-      //"user": "Souhaib MEHEMEL",
-      "verified": true,
-      //"timestamp": data.timestamp,
-      //"title": data.title,
-      //"description": data.description,
-      //"video":data.video,
-    }
-
-    axios.patch('https://corona-watch-esi.herokuapp.com/content/videos/'+data.id, data1)
-    .then((response) => {
-      console.log(response);
-      document.getElementById('validerBtn').style.display='none';
-    }, (error) => {
-      console.log(error);
-    });
-  }
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
@@ -121,14 +88,6 @@ export default function RecipeReviewCard(props) {
 
   return (
     <Card className={classes.root}>
-      <div style={{position:'absolute',marginTop:'15px', marginLeft:'280px'}}>
-          <Button id='validerBtn' variant="contained" color="primary" style={{backgroundColor:'#4E73DF', marginRight:'10px'}} onClick={event => validerArticle(event, data)}>
-              Valider
-            </Button>
-            <Button id='supprimerBtn' variant="contained" color="secondary" onClick={event => supprimerPost(event, data.id)}>
-              Supprimer
-          </Button>
-        </div>
       <CardHeader style={{textAlign:'left'}}
         avatar={
           <Avatar src={mock.ArticleCard.photoProfilRedacteur} aria-label="recipe" className={classes.avatar}>

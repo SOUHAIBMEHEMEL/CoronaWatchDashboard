@@ -1,5 +1,4 @@
 import React from 'react';
-import axios from 'axios';
 import PropTypes from 'prop-types';
 import Async from 'react-async';
 import Grid from '@material-ui/core/Grid';
@@ -17,26 +16,33 @@ import TableSortLabel from '@material-ui/core/TableSortLabel';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
+import Checkbox from '@material-ui/core/Checkbox';
+import IconButton from '@material-ui/core/IconButton';
+import Tooltip from '@material-ui/core/Tooltip';
+import DeleteIcon from '@material-ui/icons/Delete';
+import FilterListIcon from '@material-ui/icons/FilterList';
+import RefreshIcon from '@material-ui/icons/Refresh';
+import StyledBadge from '@material-ui/core/Badge';
 import Post from './post/Post';
 import { Card } from '@material-ui/core';
-import TwitterIcon from '@material-ui/icons/Twitter';
-import mock from './data'
+import axios from 'axios';
 import Button from '@material-ui/core/Button';
+import PublicIcon from '@material-ui/icons/Public';
+import mock from './data'
 
 var rows ;
-
 
 const validerArticle = (event, data, idx) => {
   const data1 ={
    "verified": true,
   }
 
-  axios.patch('https://corona-watch-esi.herokuapp.com/scrapping/tweets/'+data.id, data1)
+  axios.patch('https://corona-watch-esi.herokuapp.com/scrapping/dailymotion-videos/'+data.id, data1)
   .then((response) => {
     console.log(response);
-    var validerBtn=document.getElementsByClassName('validerBtnTwitter');
+    var validerBtn=document.getElementsByClassName('validerBtnDM');
     validerBtn[idx].style.display='none';
-    var validerBtn=document.getElementsByClassName('validerBtnTwitterDisabled');
+    var validerBtn=document.getElementsByClassName('validerBtnDMDisabled');
     validerBtn[idx].style.display='block';
   }, (error) => {
     console.log(error);
@@ -48,20 +54,18 @@ const supprimerPost = (event, data, idx) => {
     "deleted": true,
    }
 
-   axios.patch('https://corona-watch-esi.herokuapp.com/scrapping/tweets/'+data.id, data1)
+   axios.patch('https://corona-watch-esi.herokuapp.com/scrapping/dailymotion-videos/'+data.id, data1)
    .then((response) => {
      console.log(response);
-     var supprimerBtn=document.getElementsByClassName('supprimerBtnTwitter');
+     var supprimerBtn=document.getElementsByClassName('supprimerBtnDM');
      supprimerBtn[idx].style.display='none';
-     var supprimerBtn=document.getElementsByClassName('supprimerBtnTwitterDisabled');
+     var supprimerBtn=document.getElementsByClassName('supprimerBtnDMDisabled');
      supprimerBtn[idx].style.display='block';
    }, (error) => {
      console.log(error);
    });
   
 }
-
-
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -90,9 +94,9 @@ function stableSort(array, comparator) {
 }
 
 const headCells = [
-  { id: 'date', numeric: false, disablePadding: true, label: 'Date' },
-  { id: 'valider', numeric: false, disablePadding: false, label: '' },
-  { id: 'supprimer', numeric: false, disablePadding: false, label: '' },
+  { id: 'titreArticle', numeric: false, disablePadding: true, label: 'Date' },
+  { id: 'val', numeric: false, disablePadding: false, label: '' },
+  { id: 'suppr', numeric: false, disablePadding: false, label: '' },
 ];
 
 function EnhancedTableHead(props) {
@@ -180,9 +184,10 @@ const EnhancedTableToolbar = props => {
         </Typography>
       ) : (
         <Typography className={classes.title} variant="h6" id="tableTitle" style={{position:'absolute', top:'20%',left:'3.4%'}}>
-          Liste Des Tweets Ajoutes
+          Liste Des Videos Dailymotion Ajoutees
         </Typography>
       )}
+
     </Toolbar>
   );
 };
@@ -197,7 +202,7 @@ const useStyles = makeStyles(theme => ({
   },
   paper: {
     width: '100%',
-    marginBottom: 0,
+    marginBottom: '0',
   },
   table: {
     width: '100%',
@@ -215,10 +220,9 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function Enhanced(props) {
+export default function EnhancedTable(props) {
   const obj=props;
   const data =Object.values(obj);
-
   const classes = useStyles();
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('date');
@@ -243,11 +247,10 @@ export default function Enhanced(props) {
   };
 
   const handleClick = (event, name) => {
-    var x=document.getElementsByClassName('Twitter');
-    document.getElementById('firstTwitter').style.display='none';
+    var x=document.getElementsByClassName('DailyMotion');
+    document.getElementById('firstDailyMotion').style.display='none';
     for(let i=0;i<x.length; i++){x[i].style.display='none';}
     x[name].style.display='block';
-    
   };
 
   const handleChangePage = (event, newPage) => {
@@ -260,34 +263,33 @@ export default function Enhanced(props) {
   };
   
   const isSelected = name => selected.indexOf(name) !== -1;
-  
+
   var emptyRows;
   rows=data;
   emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
 
-  
   return (
     <div className={classes.root}>
     <Grid container spacing={3}>
         <Grid container item lg={8} md={8} xl={8} xs={8} style={{top:'5px', zIndex:'9999', position:'fixed'}}>
-          <Card style={{height:'30px', width:'30px', backgroundColor:'#4E73DF', borderRadius:'5px',boxShadow: '1px 2px 11px -1px rgba(164,164,208,0.75)',}}>
-            <TwitterIcon style={{color:'#ffffff',height:'16px', width:'16px', marginTop:'7px', marginLeft:'7px' }}/>
+          <Card style={{height:'40px', width:'40px', backgroundColor:'#fff', borderRadius:'20px',boxShadow: '1px 2px 11px -1px rgba(204,204,208,0.85)',}}>
+            <PublicIcon style={{color:'#666',height:'26px', width:'26px', marginTop:'7px', marginLeft:'7px' }}/>
           </Card>
-          <Typography variant='h5' style={{textAlign:'left', marginLeft:'15px',}}>
-            Nouveautes Sur Twitter
+          <Typography variant='h5' style={{textAlign:'left', marginLeft:'15px',color:'#fff', paddingTop:'5px'}}>
+            Nouveautes Sur Dailymotion
           </Typography>
         </Grid>
+
         {data.map(stat => (
-          
-          <Grid className={'Twitter'} item lg={6} md={6} xl={6} xs={12} style={{display:'none'}}>
+        <Grid className={'DailyMotion'} item lg={7} md={7} xl={7} xs={12} style={{display:'none'}}>
             <Post {...stat}/>
-          </Grid>
+        </Grid>
          ))}
-        <Grid id='firstTwitter' item lg={6} md={6} xl={6} xs={12}>
+        <Grid id='firstDailyMotion' item lg={7} md={7} xl={7} xs={12}>
             
         </Grid>
-        <Grid item lg={6} md={6} xl={6} xs={12}>
-           <Card className={classes.root} style={{boxShadow: '0px 2px 23px -14px rgba(204,204,238,0.75)',borderRadius:'5px'}}>
+        <Grid item lg={5} md={5} xl={5} xs={12}>
+           <Card className={classes.root} style={{boxShadow: '0px 2px 23px -14px rgba(204,204,238,0.75)',borderRadius:'20px'}}>
              <Paper className={classes.paper}>
                 <EnhancedTableToolbar numSelected={selected.length} />
                 <TableContainer>
@@ -299,10 +301,10 @@ export default function Enhanced(props) {
                 >
                     <EnhancedTableHead
                     classes={classes}
-                    
+                    numSelected={selected.length}
                     order={order}
                     orderBy={orderBy}
-                    
+                    onSelectAllClick={handleSelectAllClick}
                     onRequestSort={handleRequestSort}
                     rowCount={rows.length}
                     />
@@ -311,38 +313,34 @@ export default function Enhanced(props) {
                         .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                         .map((row, index) => {
                         const idx = index;
-                        
                         const labelId = `enhanced-table-checkbox-${index}`;
                         var date =new Date(row.timestamp).toLocaleString();
                         return (
-                          
                             <TableRow
                             hover
                             onClick={event => handleClick(event, idx)}
-                            
-                            tabIndex={-1}
                             key={idx}
-                            
+                           
                             >
                           
-                            <TableCell paddingLeft='20' component="th" id={labelId} scope="row" style={{width:'50%',}}>
+                            <TableCell paddingLeft='20' component="th" id={labelId} scope="row" style={{width:'50%'}}>
                                 {date}
                             </TableCell>
-
-                            <TableCell align="left" style={{width:'20%'}}>
+                            
+                            <TableCell align="left" >
                             {!row.verified ? 
-                              <Button className={'validerBtnTwitter'} variant="contained" color="primary" style={{backgroundColor:'#4E73DF',}} onClick={event => validerArticle(event, row, idx)}>
+                              <Button className={'validerBtnDM'} variant="contained" color="primary" style={{backgroundColor:'#4E73DF',}} onClick={event => validerArticle(event, row, idx)}>
                                   Valider
-                              </Button>: <Button className={'validerBtnTwitter'} variant="contained" disabled>valider</Button>}
-                              <Button className={'validerBtnTwitterDisabled'} variant="contained" style={{ display:'none'}} disabled>verifier</Button>
+                              </Button>: <Button className={'validerBtnDM'} variant="contained" disabled>valider</Button>}
+                              <Button className={'validerBtnDMDisabled'} variant="contained" style={{ display:'none'}} disabled>verifier</Button>
                             </TableCell>
 
-                            <TableCell align="left" style={{width:'20%'}}>
+                            <TableCell align="left" >
                             {!row.deleted ? 
-                              <Button className={'supprimerBtnTwitter'} variant="contained" color="secondary" onClick={event => supprimerPost(event, row, idx)}>
+                              <Button className={'supprimerBtnDM'} variant="contained" color="secondary" onClick={event => supprimerPost(event, row, idx)}>
                                   Supprimer
-                              </Button>: <Button className={'supprimerBtnTwitter'} variant="contained" disabled>Supprimer</Button>}
-                              <Button className={'supprimerBtnTwitterDisabled'} variant="contained" style={{ display:'none'}} disabled>Supprimer</Button>
+                              </Button>: <Button className={'supprimerBtnDM'} variant="contained" disabled>Supprimer</Button>}
+                              <Button className={'supprimerBtnDMDisabled'} variant="contained" style={{ display:'none'}} disabled>Supprimer</Button>
                             </TableCell>
 
                             </TableRow>
@@ -370,7 +368,5 @@ export default function Enhanced(props) {
         </Grid>
     </Grid>
 </div>
-);
-
-
+)
 }

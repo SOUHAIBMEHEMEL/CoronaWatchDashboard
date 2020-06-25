@@ -81,36 +81,7 @@ export default function RecipeReviewCard(props) {
     })
   }
   
-  const supprimerArticle = (event, id) => {
-    axios.delete('https://corona-watch-esi.herokuapp.com/content/articles/'+id)
-    .then((response) => {
-      document.getElementById('supprimerBtn').style.display='none';
-    }, (error) => {
-      console.log(error);
-    });
-    
-  }
-
-  const validerArticle = (event, data) => {
-    const data1 ={
-      "id": data.id,
-      "images": data.images,
-      "videos":data.videos,
-      "writer": data.writer,
-      "verified": true,
-      "timestamp": data.timestamp,
-      "title": data.title,
-      "content": data.content,
-    }
-
-    axios.put('https://corona-watch-esi.herokuapp.com/content/articles/'+data.id, data1)
-    .then((response) => {
-      document.getElementById('validerBtn').style.display='none';
-    }, (error) => {
-      console.log(error);
-    });
-  }
-
+  
   const handleExpandClick = () => {
     setExpanded(!expanded);
     loadComments();
@@ -119,14 +90,6 @@ export default function RecipeReviewCard(props) {
 
   return (
     <Card className={classes.root}>
-      <div style={{position:'absolute',marginTop:'15px', marginLeft:'280px'}}>
-          <Button id='validerBtn' variant="contained" color="primary" style={{backgroundColor:'#4E73DF', marginRight:'10px'}} onClick={event => validerArticle(event, data)}>
-              Valider
-            </Button>
-            <Button id='supprimerBtn' variant="contained" color="secondary" onClick={event => supprimerArticle(event, data.id)}>
-              Supprimer
-          </Button>
-        </div>
       <CardHeader style={{textAlign:'left'}}
         avatar={
           <Avatar src={mock.ArticleCard.photoProfilRedacteur} aria-label="recipe" className={classes.avatar}>

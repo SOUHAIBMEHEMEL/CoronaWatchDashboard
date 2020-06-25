@@ -1,5 +1,5 @@
 import React from 'react';
-import GestionArticles from './TwitterContent';
+import GestionArticles from './DailyMotionContent';
 import RefreshIcon from '@material-ui/icons/Refresh';
 import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
@@ -14,7 +14,7 @@ export default class BookList extends React.Component {
   }
 
   componentDidMount() {
-    fetch('https://corona-watch-esi.herokuapp.com/scrapping/tweets/')
+    fetch('https://corona-watch-esi.herokuapp.com/scrapping/dailymotion-videos/')
     .then((response) => response.json())
     .then(booksList => {
         this.setState({ books: booksList, isLoaded: true, });
@@ -22,7 +22,7 @@ export default class BookList extends React.Component {
   }
   
   fetchBooks = () => {
-      fetch('https://corona-watch-esi.herokuapp.com/scrapping/tweets/')
+      fetch('https://corona-watch-esi.herokuapp.com/scrapping/dailymotion-videos/')
       .then((response) => response.json())
       .then(booksList => {
           this.setState({ books: booksList });
