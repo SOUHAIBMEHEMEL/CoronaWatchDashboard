@@ -30,7 +30,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import Avatar from '@material-ui/core/Avatar';
 import Dashboard from './dashboard/Dashboard'; 
-import Test from './dashboard/Dashboard';
+import Test from './upload/upload';
 import Twitter from './Twitter/Twitter';
 import GestionDesArticles from './GestionArticles/Articles';
 import Youtube from './Youtube/Youtube';

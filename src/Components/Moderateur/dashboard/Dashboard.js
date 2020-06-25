@@ -15,7 +15,9 @@ import mock from './data'
 import mock1 from './test.json'
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import { Card } from '@material-ui/core';
+import Upload from '../upload/upload';
 import '../../../App.css';
+
 
 // load data
 const loadData = () =>
@@ -28,7 +30,7 @@ export default function PersistentDrawerLeft() {
   return (
     <Async promiseFn={loadData}>
         {({ data, err, isLoading }) => {
-          if (isLoading) return "Loading..."
+          if (isLoading) {return (<Upload></Upload>) }
           if (err) return `Something went wrong: ${err.message}`
 
           if (data){
