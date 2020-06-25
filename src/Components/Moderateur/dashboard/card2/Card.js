@@ -9,7 +9,7 @@ import AssignmentIcon from '@material-ui/icons/Assignment';
 const useStyles = makeStyles(theme => ({
   root: {
     height: '100%',
-    borderLeft: '5px solid #1CC88A',
+    borderRadius:'20px',
     boxShadow: '0px 2px 23px -14px rgba(204,204,238,0.75)',
   },
   content: {
@@ -28,7 +28,7 @@ const useStyles = makeStyles(theme => ({
   icon: {
     height: 45,
     width: 45,
-    color:'#ccccdd'
+    color:'#888'
   },
 
 }));

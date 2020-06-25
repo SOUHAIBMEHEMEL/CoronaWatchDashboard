@@ -14,7 +14,7 @@ export default class BookList extends React.Component {
   }
 
   componentDidMount() {
-    fetch('https://corona-watch-esi.herokuapp.com/scrapping/youtube-videos/')
+    fetch('https://corona-watch-esi.herokuapp.com/scrapping/tweets/')
     .then((response) => response.json())
     .then(booksList => {
         this.setState({ books: booksList, isLoaded: true, });
@@ -22,7 +22,7 @@ export default class BookList extends React.Component {
   }
   
   fetchBooks = () => {
-      fetch('https://corona-watch-esi.herokuapp.com/scrapping/youtube-videos/')
+      fetch('https://corona-watch-esi.herokuapp.com/scrapping/tweets/')
       .then((response) => response.json())
       .then(booksList => {
           this.setState({ books: booksList });

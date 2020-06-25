@@ -295,7 +295,7 @@ export default function EnhancedTable() {
   const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
 
   return (
-    <Card className={classes.root} style={{boxShadow: '0px 2px 23px -14px rgba(204,204,238,0.75)',borderRadius:'5px'}}>
+    <Card className={classes.root} style={{boxShadow: '0px 2px 23px -14px rgba(204,204,238,0.75)',borderRadius:'20px'}}>
       <Paper className={classes.paper}>
         <EnhancedTableToolbar numSelected={selected.length} />
         <TableContainer>

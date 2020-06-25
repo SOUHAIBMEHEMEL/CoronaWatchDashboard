@@ -76,7 +76,7 @@ const useStyles = makeStyles(theme => ({
   },
   menuItem: {
     color:'#ffffff',
-    fontSize:'15px',
+    fontSize:'12px',
   },
   menuRow:{
     '&:hover':{backgroundColor:'rgba(255,255,255,.1)',},
@@ -175,7 +175,7 @@ const useStyles = makeStyles(theme => ({
   drawerPaper: {
     width: drawerWidth,
     background:'transparent',
-    borderRight:'1px solid #ffffff',
+    borderRight:'1px solid transparent',
   },
   drawerHeader: {
     display: 'flex',
@@ -242,12 +242,11 @@ export default function PersistentDrawerLeft() {
     var element = document.getElementsByClassName('contentModerateur');
     for (let i = 0; i < element.length; i++){
       element[i].style.display = "none";
-      menuElement[i].style.borderLeft = '5px solid transparent'; 
       menuElement[i].style.background= "transparent";
     }
-    menuElement[index].style.background= "rgba(200,200,200,.15)";
+    menuElement[index].style.background= "rgba(200,200,200,.25)";
     element[index].style.display = "block";
-    menuElement[index].style.borderLeft = '5px solid #fff';
+    menuElement[index].style.borderRadius = '30px';
   }
 
   return (
@@ -304,21 +303,16 @@ export default function PersistentDrawerLeft() {
           <img alt='logo' src="/images/logo.png" height='100'width='100' style={{margin:'40px', marginRight:'60px'}}/>
           }
 
-
-          
-          <IconButton onClick={handleDrawerClose} className={classes.menuClose}>
-            {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
-          </IconButton>
         </div>
-        <Divider style={{width:'50%', marginLeft:'25%',backgroundColor:'#fff', marginBottom:'10px'}} />
-        <List>
+        <Divider style={{width:'70%', marginLeft:'15%',backgroundColor:'#fff', marginBottom:'10px'}} />
+        <List style={{paddingLeft:'10px'}}>
           {['Dashboard','Gestion des articles','Gestion des zones', 'Gestion des postes',
               'Youtube', 'Twitter', 'Dailymotion'].map((text, index) => (
-            <ListItem button key={index} className={'menuItem01'} onClick={event => handleContent(index)} >
-              <ListItemIcon className={classes.menuItem}>
+            <ListItem button key={index} className={'menuItem01'} onClick={event => handleContent(index)} style={{height:'38px',marginTop:'7px'}} >
+              <ListItemIcon className={classes.menuItem} style={{marginLeft:'5px'}}>
                 {chooseIncon(index)}
               </ListItemIcon>
-              <ListItemText className={classes.menuItem} >{text}</ListItemText>
+              <ListItemText className={classes.menuItem} style={{marginLeft:'-15px'}} >{text}</ListItemText>
                
             </ListItem>
           ))}

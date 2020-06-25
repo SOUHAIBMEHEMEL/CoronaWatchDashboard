@@ -22,6 +22,8 @@ import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import Button from '@material-ui/core/Button';
 import mock from '../data';
 
+import {  TwitterTweetEmbed } from 'react-twitter-embed';
+
 import ReactPlayer from "react-player";
 
 const useStyles = makeStyles((theme) => ({
@@ -69,6 +71,8 @@ export default function RecipeReviewCard(props) {
   const [expanded, setExpanded] = React.useState(false);
 
   var date =new Date(data.timestamp).toLocaleString();
+  var str = data.tweet_url;
+  var twitter_id = str.substring(str.length - 19, str.length); 
   
   // load comments
   function loadComments() {
@@ -79,29 +83,28 @@ export default function RecipeReviewCard(props) {
           console.log(res.data);
         })
   }
+  
+  
 
+  
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
+
 
   return (
     <Card className={classes.root}>
       <CardHeader style={{textAlign:'left'}}
         avatar={
-          <Avatar src={"../../images/socialMedia/youtube.png"} >
+          <Avatar src={"../../images/socialMedia/twitter.png"}>
           </Avatar>
         }
-        title="YOUTUBE"
+        title="Twitter"
         subheader={date}
       />
-      <CardContent>
-        <Typography variant="h6" style={{textAlign:'left', paddingBottom:'2%'}} >
-        {data.title}
-        </Typography> 
-      </CardContent>
-      <Grid container style={{padding:'0',}}>
-        <Grid item lg={12} md={12} xl={12} xs={12} style={{marginLeft:'-12px'}}>
-        <ReactPlayer url={"www.youtube.com/embed/"+data.youtube_id} controls={true} />
+      <Grid container spacing={1} style={{padding:'3%',}}>
+        <Grid item lg={12} md={12} xl={12} xs={12}>
+        <TwitterTweetEmbed tweetId={twitter_id}></TwitterTweetEmbed> 
         </Grid>
       </Grid>
       <CardActions disableSpacing>

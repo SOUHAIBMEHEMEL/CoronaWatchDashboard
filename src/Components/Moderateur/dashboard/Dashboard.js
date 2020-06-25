@@ -33,14 +33,14 @@ export default function PersistentDrawerLeft() {
           if (data){
             return (
               <Grid container spacing={3}>
-                  <Grid container item lg={12} md={12} xl={12} xs={12}>
-                    <Card style={{height:'30px', width:'30px', backgroundColor:'#4E73DF', borderRadius:'5px',boxShadow: '1px 2px 11px -1px rgba(164,164,208,0.75)',}}>
-                      <DashboardIcon style={{color:'#ffffff',height:'16px', width:'16px', marginTop:'7px', marginLeft:'7px' }}/>
-                    </Card>
-                    <Typography variant='h6' style={{textAlign:'left', marginLeft:'10px',}}>
-                      Dashboard
-                    </Typography>
-                  </Grid>
+                <Grid container item lg={8} md={8} xl={8} xs={8} style={{top:'5px', zIndex:'9999', position:'fixed'}}>
+                  <Card style={{height:'40px', width:'40px', backgroundColor:'#fff', borderRadius:'20px',boxShadow: '1px 2px 11px -1px rgba(204,204,208,0.85)',}}>
+                    <DashboardIcon style={{color:'#666',height:'20px', width:'20px', marginTop:'10px', marginLeft:'10px' }}/>
+                  </Card>
+                  <Typography variant='h5' style={{textAlign:'left', marginLeft:'15px',color:'#fff', paddingTop:'5px'}}>
+                    Dashboard
+                  </Typography>
+                </Grid>
                   
                   {mock1.Card1.map(stat => (
                     <Grid item xs={12} sm={6} md={3} key={stat.idCard}>

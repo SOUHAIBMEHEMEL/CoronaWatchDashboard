@@ -218,7 +218,7 @@ const useStyles = makeStyles(theme => ({
   },
   paper: {
     width: '100%',
-    marginBottom: theme.spacing(2),
+    marginBottom: '0',
   },
   table: {
     width: '100%',
@@ -311,14 +311,15 @@ export default function EnhancedTable() {
             return (
                 <div className={classes.root}>
                 <Grid container spacing={3}>
-                    <Grid container item lg={12} md={12} xl={12} xs={12}>
-                      <Card style={{height:'30px', width:'30px', backgroundColor:'#4E73DF', borderRadius:'5px',boxShadow: '1px 2px 11px -1px rgba(164,164,208,0.75)',}}>
-                        <GroupIcon style={{color:'#ffffff',height:'16px', width:'16px', marginTop:'7px', marginLeft:'7px' }}/>
-                      </Card>
-                      <Typography variant='h6' style={{textAlign:'left', marginLeft:'10px',}}>
-                        Gestion Des Postes Utilisateurs
-                      </Typography>
-                    </Grid>
+                  <Grid container item lg={8} md={8} xl={8} xs={8} style={{top:'5px', zIndex:'9999', position:'fixed'}}>
+                    <Card style={{height:'40px', width:'40px', backgroundColor:'#fff', borderRadius:'20px',boxShadow: '1px 2px 11px -1px rgba(204,204,208,0.85)',}}>
+                      <GroupIcon style={{color:'#666',height:'26px', width:'26px', marginTop:'7px', marginLeft:'7px' }}/>
+                    </Card>
+                    <Typography variant='h5' style={{textAlign:'left', marginLeft:'15px',color:'#fff', paddingTop:'5px'}}>
+                    Gestion Des Postes Utilisateurs
+                    </Typography>
+                  </Grid>
+
                     {data.map(stat => (
                     <Grid className={'Post'} item lg={6} md={6} xl={3} xs={12} style={{display:'none'}}>
                         <Post {...stat}/>
@@ -328,7 +329,7 @@ export default function EnhancedTable() {
                         <Post {...data[0]}/>
                     </Grid>
                     <Grid item lg={6} md={12} xl={9} xs={12}>
-                       <Card className={classes.root} style={{boxShadow: '0px 2px 23px -14px rgba(204,204,238,0.75)',borderRadius:'5px'}}>
+                       <Card className={classes.root} style={{boxShadow: '0px 2px 23px -14px rgba(204,204,238,0.75)',borderRadius:'20px'}}>
                          <Paper className={classes.paper}>
                             <EnhancedTableToolbar numSelected={selected.length} />
                             <TableContainer>

@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: '100%',
     boxShadow: '0px 2px 23px -14px rgba(204,204,238,0.75)',
-    borderRadius:'5px'
+    borderRadius:'20px'
   },
   media: {
     height: 0,
