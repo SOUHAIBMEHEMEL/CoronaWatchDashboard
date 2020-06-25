@@ -272,7 +272,7 @@ export default function EnhancedTable(props) {
     <div className={classes.root}>
     <Grid container spacing={3}>
         <Grid container item lg={8} md={8} xl={8} xs={8} style={{top:'5px', zIndex:'9999', position:'fixed'}}>
-          <Card style={{height:'40px', width:'40px', backgroundColor:'#fff', borderRadius:'20px',boxShadow: '1px 2px 11px -1px rgba(204,204,208,0.85)',}}>
+          <Card style={{height:'40px', width:'40px', backgroundColor:'#fff', borderRadius:'20px',boxShadow: '1px 2px 11px -1px rgba(54,54,118,0.75)',}}>
             <PublicIcon style={{color:'#666',height:'26px', width:'26px', marginTop:'7px', marginLeft:'7px' }}/>
           </Card>
           <Typography variant='h5' style={{textAlign:'left', marginLeft:'15px',color:'#fff', paddingTop:'5px'}}>
@@ -329,18 +329,18 @@ export default function EnhancedTable(props) {
                             
                             <TableCell align="left" >
                             {!row.verified ? 
-                              <Button className={'validerBtnDM'} variant="contained" color="primary" style={{backgroundColor:'#4E73DF',}} onClick={event => validerArticle(event, row, idx)}>
+                              <Button className={'validerBtnDM'} variant="contained" color="primary" style={{backgroundColor:'#4E73DF',borderRadius:'25px'}} onClick={event => validerArticle(event, row, idx)}>
                                   Valider
-                              </Button>: <Button className={'validerBtnDM'} variant="contained" disabled>valider</Button>}
-                              <Button className={'validerBtnDMDisabled'} variant="contained" style={{ display:'none'}} disabled>verifier</Button>
+                              </Button>: <Button className={'validerBtnDM'} style={{borderRadius:'25px'}} variant="contained" disabled>valider</Button>}
+                              <Button className={'validerBtnDMDisabled'} variant="contained" style={{ display:'none',borderRadius:'25px'}} disabled>verifier</Button>
                             </TableCell>
 
                             <TableCell align="left" >
                             {!row.deleted ? 
-                              <Button className={'supprimerBtnDM'} variant="contained" color="secondary" onClick={event => supprimerPost(event, row, idx)}>
+                              <Button className={'supprimerBtnDM'} style={{borderRadius:'25px'}} variant="contained" color="secondary" onClick={event => supprimerPost(event, row, idx)}>
                                   Supprimer
-                              </Button>: <Button className={'supprimerBtnDM'} variant="contained" disabled>Supprimer</Button>}
-                              <Button className={'supprimerBtnDMDisabled'} variant="contained" style={{ display:'none'}} disabled>Supprimer</Button>
+                              </Button>: <Button className={'supprimerBtnDM'} style={{borderRadius:'25px'}} variant="contained" disabled>Supprimer</Button>}
+                              <Button className={'supprimerBtnDMDisabled'} variant="contained" style={{ display:'none', borderRadius:'25px'}} disabled>Supprimer</Button>
                             </TableCell>
 
                             </TableRow>

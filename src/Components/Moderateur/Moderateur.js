@@ -94,7 +94,7 @@ const useStyles = makeStyles(theme => ({
     '&:hover':{backgroundColor:'rgba(255,255,255,.1)',}
   },
   profilePhoto: {
-    boxShadow: '1px 2px 11px -1px rgba(204,204,218,0.85)',
+    boxShadow: '1px 2px 11px -1px rgba(54,54,118,0.75)',
     background:'#ffffff',
     marginLeft:'10px',
     marginTop: '10px',
@@ -106,7 +106,7 @@ const useStyles = makeStyles(theme => ({
     height: '34px',
   },
   NotificationsBtn:{
-    boxShadow: '1px 2px 11px -1px rgba(204,204,218,0.85)',
+    boxShadow: '1px 2px 11px -1px rgba(54,54,118,0.75)',
     background:'#ffffff',
     marginTop:'10px',
     marginRight:'10px',

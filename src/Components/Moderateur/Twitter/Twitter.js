@@ -34,7 +34,7 @@ export default class BookList extends React.Component {
       <div>
         {this.state.isLoaded && (
           <div>
-          <Tooltip title="Refresh" style={{position:'fixed', top:'13px',right:'150px',backgroundColor:'#fff', zIndex:9999, height:'40px', width:'40px', boxShadow: '1px 2px 11px -1px rgba(204,204,218,0.85)',}}>
+          <Tooltip title="Refresh" style={{position:'fixed', top:'13px',right:'150px',backgroundColor:'#fff', zIndex:9999, height:'40px', width:'40px', boxShadow: '1px 2px 11px -1px rgba(54,54,118,0.75)',}}>
             <IconButton onClick={this.fetchBooks} aria-label="refresh" >
               <RefreshIcon style={{color:'#666',}}/>
             </IconButton>
