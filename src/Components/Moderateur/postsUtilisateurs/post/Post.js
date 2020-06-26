@@ -21,6 +21,7 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import Button from '@material-ui/core/Button';
 import mock from '../data';
+import Comments from './CommentList';
 
 import '../../../../Styles/video-react.css';
 import { Player } from 'video-react';
@@ -116,8 +117,6 @@ export default function RecipeReviewCard(props) {
         <IconButton aria-label="comments">
           <ChatBubbleIcon />
         </IconButton>
-        <Typography variant="body2" color="textSecondary" component="p" style={{textAlign:'right'}}>
-        {mock.ArticleCard.commentaire}</Typography>
         <IconButton
           className={clsx(classes.expand, {
             [classes.expandOpen]: expanded,
@@ -131,28 +130,7 @@ export default function RecipeReviewCard(props) {
       </CardActions>
       
       <Collapse in={expanded} timeout="auto" unmountOnExit style={{borderTop:'1px solid #DDDDDD', paddingBottom:'30px'}}>
-        {mock.ArticleCard.listeCommentaires.map(stat => (
-          <Grid container spacing={2} style={{padding:'3%', textAlign:'left',paddingBottom:'0px'}}>
-          <Grid item md={1} lg={1}>
-            <Avatar src={stat.photoProfilUtilisateur} aria-label="Photo de profile" >
-            </Avatar>
-          </Grid>
-          <Grid container item md={11} lg={11}>
-            <Grid item style={{maxWidth:'80%', marginLeft:'3%'}}>
-              <Typography variant="h6" style={{fontSize:'14px'}}>{stat.nomUtilisateur}</Typography>
-              <Button style={{backgroundColor:'#EEEEEE', borderRadius:'20px', paddingLeft:'10px', paddingRight:'10px',textAlign:'left'}}>
-                {stat.contenuCommentaire}
-              </Button>
-              <Typography variant="h6" style={{marginLeft:'20px', fontSize:'14px', color:'#888888'}}>{stat.date}</Typography>
-            </Grid>
-            <Grid item>
-              <IconButton aria-label="settings" style={{marginTop:'25px', marginLeft:'2px', height:'35px', width:'35px'}}>
-                <MoreHorizIcon />
-              </IconButton>
-            </Grid>
-          </Grid>
-        </Grid>
-        ))}
+         <Comments id={data.id}/>
       </Collapse>
     </Card>      
   );

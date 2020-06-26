@@ -30,7 +30,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import Avatar from '@material-ui/core/Avatar';
 import Dashboard from './dashboard/Dashboard'; 
-import Test from './upload/upload';
+import GestionZones from './GestionZones/Dashboard';
 import Twitter from './Twitter/Twitter';
 import GestionDesArticles from './GestionArticles/Articles';
 import Youtube from './Youtube/Youtube';
@@ -342,7 +342,7 @@ export default function PersistentDrawerLeft() {
           <GestionDesArticles />         
         </Grid>
         <Grid className={'contentModerateur'} style={{display:'none'}} item lg={12} md={12}>
-          <Test />         
+          <GestionZones />         
         </Grid>
         <Grid className={'contentModerateur'} style={{display:'none'}} item lg={12} md={12}>
           <GestionPostsUtilisateurs />         
