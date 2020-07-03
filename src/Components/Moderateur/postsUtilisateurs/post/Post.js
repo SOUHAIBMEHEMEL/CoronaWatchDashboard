@@ -21,6 +21,7 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import Button from '@material-ui/core/Button';
 import mock from '../data';
+import Comments from './CommentList';
 
 import '../../../../Styles/video-react.css';
 import { Player } from 'video-react';
@@ -29,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: '100%',
     boxShadow: '0px 2px 23px -14px rgba(204,204,238,0.75)',
-    borderRadius:'5px'
+    borderRadius:'20px'
   },
   media: {
     height: 0,
@@ -80,39 +81,6 @@ export default function RecipeReviewCard(props) {
           console.log(res.data);
         })
   }
-  
-  const supprimerPost = (event, id) => {
-    console.log('id= ',id);
-    axios.delete('https://corona-watch-esi.herokuapp.com/content/videos/'+id)
-    .then((response) => {
-      console.log(response);
-      document.getElementById('supprimerBtn').style.display='none';
-    }, (error) => {
-      console.log(error);
-    });
-    
-  }
-
-  const validerArticle = (event, data) => {
-    console.log('id= ',data.id);
-    const data1 ={
-      // "id": data.id,
-      //"user": "Souhaib MEHEMEL",
-      "verified": true,
-      //"timestamp": data.timestamp,
-      //"title": data.title,
-      //"description": data.description,
-      //"video":data.video,
-    }
-
-    axios.patch('https://corona-watch-esi.herokuapp.com/content/videos/'+data.id, data1)
-    .then((response) => {
-      console.log(response);
-      document.getElementById('validerBtn').style.display='none';
-    }, (error) => {
-      console.log(error);
-    });
-  }
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
@@ -121,14 +89,6 @@ export default function RecipeReviewCard(props) {
 
   return (
     <Card className={classes.root}>
-      <div style={{position:'absolute',marginTop:'15px', marginLeft:'280px'}}>
-          <Button id='validerBtn' variant="contained" color="primary" style={{backgroundColor:'#4E73DF', marginRight:'10px'}} onClick={event => validerArticle(event, data)}>
-              Valider
-            </Button>
-            <Button id='supprimerBtn' variant="contained" color="secondary" onClick={event => supprimerPost(event, data.id)}>
-              Supprimer
-          </Button>
-        </div>
       <CardHeader style={{textAlign:'left'}}
         avatar={
           <Avatar src={mock.ArticleCard.photoProfilRedacteur} aria-label="recipe" className={classes.avatar}>
@@ -157,8 +117,6 @@ export default function RecipeReviewCard(props) {
         <IconButton aria-label="comments">
           <ChatBubbleIcon />
         </IconButton>
-        <Typography variant="body2" color="textSecondary" component="p" style={{textAlign:'right'}}>
-        {mock.ArticleCard.commentaire}</Typography>
         <IconButton
           className={clsx(classes.expand, {
             [classes.expandOpen]: expanded,
@@ -172,28 +130,7 @@ export default function RecipeReviewCard(props) {
       </CardActions>
       
       <Collapse in={expanded} timeout="auto" unmountOnExit style={{borderTop:'1px solid #DDDDDD', paddingBottom:'30px'}}>
-        {mock.ArticleCard.listeCommentaires.map(stat => (
-          <Grid container spacing={2} style={{padding:'3%', textAlign:'left',paddingBottom:'0px'}}>
-          <Grid item md={1} lg={1}>
-            <Avatar src={stat.photoProfilUtilisateur} aria-label="Photo de profile" >
-            </Avatar>
-          </Grid>
-          <Grid container item md={11} lg={11}>
-            <Grid item style={{maxWidth:'80%', marginLeft:'3%'}}>
-              <Typography variant="h6" style={{fontSize:'14px'}}>{stat.nomUtilisateur}</Typography>
-              <Button style={{backgroundColor:'#EEEEEE', borderRadius:'20px', paddingLeft:'10px', paddingRight:'10px',textAlign:'left'}}>
-                {stat.contenuCommentaire}
-              </Button>
-              <Typography variant="h6" style={{marginLeft:'20px', fontSize:'14px', color:'#888888'}}>{stat.date}</Typography>
-            </Grid>
-            <Grid item>
-              <IconButton aria-label="settings" style={{marginTop:'25px', marginLeft:'2px', height:'35px', width:'35px'}}>
-                <MoreHorizIcon />
-              </IconButton>
-            </Grid>
-          </Grid>
-        </Grid>
-        ))}
+         <Comments id={data.id}/>
       </Collapse>
     </Card>      
   );

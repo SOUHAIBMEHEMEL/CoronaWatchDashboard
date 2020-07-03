@@ -47,9 +47,13 @@ class Login extends Component {
           console.log(localStorage.getItem('refreshToken'))
           this.setState({loggedIn: true})
         }
+        else{alert("Nom utilisateur ou mot de passe incorrect, reessayer!!");}
       }
     )
-    .catch( error => console.error(error))
+    .catch( error => {
+      alert("Nom utilisateur ou mot de passe incorrect, reessayer!!");
+    }
+    )
   }
 
   register = event => {
@@ -63,9 +67,14 @@ class Login extends Component {
       data => {
         console.log(data.token);
         localStorage.setItem('token', data.token);
+        alert('Enregistrement avec succes. Vous pouvez se connecter maintenant!!');
+
       }
     )
-    .catch( error => console.error(error))
+    .catch( error => {
+      alert("Erreur dans l'enregistrement, reessayer!!");
+    }
+    )
   }
   inputChanged = event => {
     const cred = this.state.credentials;

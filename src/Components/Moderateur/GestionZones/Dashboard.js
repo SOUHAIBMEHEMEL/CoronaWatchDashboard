@@ -2,18 +2,11 @@ import React from 'react';
 import Async from 'react-async';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
-import ArticlesRecents from './articlesRecents/ArticlesRecents'
-import Card1 from './card1/Card'
-import Card2 from './card2/Card'
-import Card3 from './card3/Card'
-import Card4 from './card4/Card'
 import Map from './map/Map'
-import NouveautesReseaux from './nouveautesReseaux/NouveautesReseaux'
 import NouvellesZones from './nouvellesZones/NouvellesZones'
-import PostsRecents from './postsRecents/PostsRecents'
 import mock from './data'
 import mock1 from './test.json'
-import DashboardIcon from '@material-ui/icons/Dashboard';
+import PlaceIcon from '@material-ui/icons/Place';
 import { Card } from '@material-ui/core';
 import Upload from '../upload/upload';
 import '../../../App.css';
@@ -36,37 +29,16 @@ export default function PersistentDrawerLeft() {
           if (data){
             return (
               <Grid container spacing={3}>
-                <Grid container item lg={8} md={8} xl={8} xs={8} style={{top:'5px', zIndex:'9999', position:'fixed'}}>
+                <Grid container item lg={8} md={8} xl={8} xs={8} style={{top:'5px', zIndex:'9999', position:'fixed',}}>
                   <Card style={{height:'40px', width:'40px', backgroundColor:'#fff', borderRadius:'20px',boxShadow: '1px 2px 11px -1px rgba(54,54,118,0.75)',}}>
-                    <DashboardIcon style={{color:'#666',height:'20px', width:'20px', marginTop:'10px', marginLeft:'10px' }}/>
+                    <PlaceIcon style={{color:'#666',height:'20px', width:'20px', marginTop:'10px', marginLeft:'10px' }}/>
                   </Card>
                   <Typography variant='h5' style={{textAlign:'left', marginLeft:'15px',color:'#fff', paddingTop:'5px'}}>
-                    Dashboard
+                    Gestion Des Zones 
                   </Typography>
                 </Grid>
-                  
-                  {mock1.Card1.map(stat => (
-                    <Grid item xs={12} sm={6} md={3} key={stat.idCard}>
-                      <Card1 {...stat} />
-                    </Grid>
-                  ))}
-                  {mock.Card2.map(stat => (
-                    <Grid item xs={12} sm={6} md={3} key={stat.idCard}>
-                      <Card2 {...stat} />
-                    </Grid>
-                  ))}
-                  {mock.Card3.map(stat => (
-                    <Grid item xs={12} sm={6} md={3} key={stat.idCard}>
-                      <Card3 {...stat} />
-                    </Grid>
-                  ))}
-                  {mock.Card4.map(stat => (
-                    <Grid item xs={12} sm={6} md={3} key={stat.idCard}>
-                      <Card4 {...stat} />
-                    </Grid>
-                  ))}
 
-                  <Grid  item lg={6} md={6} xl={3} xs={12}>
+                <Grid  item lg={6} md={6} xl={3} xs={12} style={{marginBottom:'500px',}}>
                   <Card style={{paddingTop:'0px', height:'100%', width:'100%', backgroundColor:'#fff', borderRadius:'20px',boxShadow: '1px 2px 11px -1px rgba(54,54,118,0.75)',}}>
                   <Typography variant='h6' style={{textAlign:'left', padding:'15px'}}>
                     Map Des Zones Declarees
@@ -76,20 +48,11 @@ export default function PersistentDrawerLeft() {
                         <Map/>
                       </div>
                     </div>
-                  </Card>
-                    
-                  </Grid>
+                  </Card>  
+                </Grid>
+
                   <Grid item lg={6} md={12} xl={9} xs={12}>
                     <NouvellesZones/>
-                  </Grid>
-                  <Grid item lg={4} md={12} xl={9} xs={12}>
-                    <ArticlesRecents />
-                  </Grid>
-                  <Grid item lg={4} md={12} xl={9} xs={12}>
-                    <PostsRecents />
-                  </Grid>
-                  <Grid item lg={4} md={12} xl={9} xs={12}>
-                    <NouveautesReseaux />
                   </Grid>
               </Grid>
             )}

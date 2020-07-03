@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
     boxShadow: '0px 2px 23px -14px rgba(204,204,238,0.75)',
     width:'98%',
     marginLeft:'1.7%',
-    borderRadius:'3px',
+    borderRadius:'20px',
   },
   customisedScrollbar:{
 
@@ -40,7 +40,7 @@ export default function InteractiveList() {
   const [dense] = React.useState(false);
   
   return (
-      <Grid className={classes.root} container >
+      <Grid container className={classes.root} >
         <Grid style={{width:'100%'}}>
           <div style={{width:'95%', marginLeft:'5%',display:'flex',}}>
             <div style={{width:'60%',display:'flex'}}>
@@ -55,7 +55,7 @@ export default function InteractiveList() {
               </IconButton>
             </div>
           </div>
-          <div className={classes.demo}>
+          <div className={classes.demo} style={{borderRadius:'20px',}}>
           <Scrollbars style={{ height: 300,}} >
             <List dense={dense}>
               {mock.PostsRecents.map(stat => (

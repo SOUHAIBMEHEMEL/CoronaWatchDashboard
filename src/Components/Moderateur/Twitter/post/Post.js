@@ -23,8 +23,9 @@ import Button from '@material-ui/core/Button';
 import mock from '../data';
 import Comments from './CommentList';
 
-import '../../../../Styles/video-react.css';
-import { Player } from 'video-react';
+import {  TwitterTweetEmbed } from 'react-twitter-embed';
+
+import ReactPlayer from "react-player";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -71,7 +72,21 @@ export default function RecipeReviewCard(props) {
   const [expanded, setExpanded] = React.useState(false);
 
   var date =new Date(data.timestamp).toLocaleString();
+  var str = data.tweet_url;
+  var twitter_id = str.substring(str.length - 19, str.length); 
   
+  // load comments
+  function loadComments() {
+    axios.get("https://corona-watch-esi.herokuapp.com/content/post-comments/"+data.id)
+        .then(res => {
+          //MyComments = res.data;
+          //this.setState({ emps });
+          console.log(res.data);
+        })
+  }
+  
+  
+
   
   const handleExpandClick = () => {
     setExpanded(!expanded);
@@ -82,38 +97,16 @@ export default function RecipeReviewCard(props) {
     <Card className={classes.root}>
       <CardHeader style={{textAlign:'left'}}
         avatar={
-          <Avatar src={mock.ArticleCard.photoProfilRedacteur} aria-label="recipe" className={classes.avatar}>
+          <Avatar src={"../../images/socialMedia/twitter.png"}>
           </Avatar>
         }
-        title={data.writer}
+        title="Twitter"
         subheader={date}
       />
-      <CardContent>
-        <Typography variant="h6" style={{textAlign:'right', paddingBottom:'2%'}} >
-        {data.title}
-        </Typography> 
-        <Typography variant="body2" color="textSecondary" component="p" style={{textAlign:'right'}}>
-        {data.content}</Typography>
-      </CardContent>
       <Grid container spacing={1} style={{padding:'3%',}}>
-        {data.images.map(stat => (
-            <Grid item lg={6} md={6} xl={3} xs={12}>
-            <CardMedia
-            className={classes.media}
-            image={stat.content}
-            title="image"
-            />
-            </Grid>  
-        ))}
-        {data.videos.map(stat => (
-            <Grid item lg={12} md={12} xl={12} xs={12}>
-              <Player
-                playsInline
-                poster="/assets/poster.png"
-                src={stat.videos}
-              />
-            </Grid>  
-        ))}
+        <Grid item lg={12} md={12} xl={12} xs={12}>
+        <TwitterTweetEmbed tweetId={twitter_id}></TwitterTweetEmbed> 
+        </Grid>
       </Grid>
       <CardActions disableSpacing>
         <IconButton aria-label="comments">
@@ -132,7 +125,7 @@ export default function RecipeReviewCard(props) {
       </CardActions>
       
       <Collapse in={expanded} timeout="auto" unmountOnExit style={{borderTop:'1px solid #DDDDDD', paddingBottom:'30px'}}>
-        <Comments id={data.id}/>
+         <Comments id={data.id}/>
       </Collapse>
     </Card>      
   );

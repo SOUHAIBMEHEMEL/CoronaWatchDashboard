@@ -23,13 +23,14 @@ const useStyles = makeStyles((theme) => ({
     boxShadow: '0px 2px 23px -14px rgba(204,204,238,0.75)',
     width:'98%',
     marginLeft:'1.7%',
-    borderRadius:'3px',
+    borderRadius:'20px',
   },
   customisedScrollbar:{
 
   },
   demo: {
     backgroundColor: '#ffffff',
+    borderRadius:'20px',
   },
   title: {
     margin: theme.spacing(4, 0, 2),

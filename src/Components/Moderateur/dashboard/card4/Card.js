@@ -9,7 +9,7 @@ import PublicIcon from '@material-ui/icons/Public';
 const useStyles = makeStyles(theme => ({
   root: {
     height: '100%',
-    borderLeft: '5px solid #F6C23E',
+    borderRadius:'20px',
     boxShadow: '0px 2px 23px -14px rgba(204,204,238,0.75)',
   },
   content: {
@@ -28,7 +28,7 @@ const useStyles = makeStyles(theme => ({
   icon: {
     height: 45,
     width: 45,
-    color:'#CCCCDD'
+    color:'#F6C23E'
   },
 
 }));
