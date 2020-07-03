@@ -5,7 +5,10 @@ import L from 'leaflet';
 import { Map, TileLayer, Marker, Popup } from 'react-leaflet';
 import Button from '@material-ui/core/Button';
 
+
+
 const token= localStorage.getItem('token') ;
+
 
 
 let myIcon = L.icon({
@@ -32,7 +35,7 @@ export default class SimpleExample extends Component {
       radius: 0,
       longitude: 0,
       latitude: 0,
-      national: true,
+      national: false,
       timestamp : null,
   }
 
@@ -86,12 +89,16 @@ export default class SimpleExample extends Component {
         .then(
             data => {
                 console.log(data.id);
+                alert("Zone ajoutée avec succes ! ");
             }
         )
         
       }
     )
-    .catch( error => console.error(error))
+    .catch( error => {
+        console.error(error);
+        alert("Une erreur s'est produite ! réessayer ");
+    })
   } 
 
   changeName = (e) => {
@@ -236,6 +243,15 @@ export default class SimpleExample extends Component {
     })
   }
 
+  changeNational =() => {
+    var chk = document.getElementById("checkboxNational");
+    if (chk.checked) {
+      this.setState( {
+        national : true,
+      })
+    }
+  }
+
   addMarker = (e) => {
     //const {markers} = this.state
     console.log(e.latlng)
@@ -251,6 +267,8 @@ export default class SimpleExample extends Component {
     const position = [this.state.latitude, this.state.longitude]
     return (
         <div>
+          <h4 align="center">Ajouter une nouvelle zone</h4>
+       <p align="center">Cliquez sur le centre de la zone sur la carte</p>
             <Map 
                 center={[19.4100819, -99.1630388]} 
                 onClick={this.addMarker}
@@ -283,6 +301,7 @@ export default class SimpleExample extends Component {
                         <label class="required" for="radius">Radius</label>
                         <input type="number" class="form-control" name="radius" placeholder="radius"  onChange={this.changeRadius} value={this.state.radius} required="true"/>
                     </div>
+                 
                 </div> 
 
 
@@ -331,6 +350,15 @@ export default class SimpleExample extends Component {
                             </div>
                         </div> 
 
+                        <div class="form-group">
+                        <div class="form-check">
+                          <input class="form-check-input" type="checkbox"  id="checkboxNational" onClick={this.changeNational} />
+                          <label class="form-check-label" for="invalidCheck2">
+                            Zone natonale
+                          </label>
+                        </div>
+                      </div>
+
                         <input hidden name="longitude" value={this.state.longitude} />
                         <input hidden name="latitude" value={this.state.latitude} />
                         <input hidden name="national" value={this.state.national} />
@@ -342,7 +370,7 @@ export default class SimpleExample extends Component {
                             <Button
                                 variant="contained"
                                 //color="secondary"
-                                class="btn btn-secondary"
+                                class="btn btn-secondary form-control"
                                 block
                                 //onclick = {handleAddZone}
                                 //className={classes.button}
@@ -355,9 +383,10 @@ export default class SimpleExample extends Component {
                             <div class="form-group col-md-6">
                             <Button
                                 name="submit"
+                                class="btn btn-primary form-control"
                                 //type="submit"
                                 variant="contained"
-                                color="primary"
+                                //color="primary "
                                 block
                                 onClick = {this.handleAddZone}
                                 //className={classes.button}

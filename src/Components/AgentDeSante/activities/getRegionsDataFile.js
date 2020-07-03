@@ -5,6 +5,7 @@ import MapData from './mapContainer';
 const token= localStorage.getItem('token') ;
 
 
+
 export default class getRegionsDataFile extends React.Component{
 
     state = {
@@ -12,8 +13,10 @@ export default class getRegionsDataFile extends React.Component{
     }
 
 
+
     componentDidMount (){
-        axios.get(`https://corona-watch-esi.herokuapp.com/cartography/regions/`,{headers : {'Authorization': `Bearer ${token}`}
+      
+      axios.get(`https://corona-watch-esi.herokuapp.com/cartography/regions/`,{headers : {'Authorization': `Bearer ${token}`}
                   })
       .then(res => {
         const region = res.data;
@@ -25,12 +28,19 @@ export default class getRegionsDataFile extends React.Component{
          );
          console.log(this.state.regions) ;
       })
+          .catch( error => {
+            console.error(error);
+            alert("Une erreur s'est produite lors de la récupération des zones ! réessayer ");
+        })
       
   }
 
   render() {
-    return (
-     <MapData {...this.state}/>
-    )
+   
+    
+      return (
+        <MapData {...this.state} />
+       )
+    
   }
 }

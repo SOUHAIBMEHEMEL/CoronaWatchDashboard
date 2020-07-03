@@ -15,6 +15,10 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useTheme } from '@material-ui/core/styles';
+import Modal from 'react-bootstrap/Modal';
+import axios from 'axios' ;
+
+const token= localStorage.getItem('token') ;
 
 
 //const rows = mock.WorldData;
@@ -26,6 +30,32 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+var idZoneModal = 0 ;
+var zoneInfo =  {
+  statistic: {
+      confirmed_infected_total: 0,
+      confirmed_active_cases: 0,
+      deaths: 0,
+      recovered: 0,
+      suspicious_cases: 0,
+      asymptomatic_cases: 0,
+      new_cases: 0,
+      new_deaths: 0,
+      
+    },
+    name:"",
+    radius: 0,
+    longitude: 0,
+    latitude: 0,
+    national: true,
+    timestamp : null,
+}
+
+
+
+const ModifierZone =(e) => {
+  console.log(e);
+}
 
 const handleAddZone = () => {
   return <Redirect to="/AgentDeSante/addZone/addZone" />
@@ -36,6 +66,7 @@ export default function DisplayMap(props) {
   
   var { regions } = props;
   const [open, setOpen] = React.useState(false);
+  const [modalShow, setModalShow] = React.useState(false);
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
   const classes = useStyles;
@@ -49,16 +80,52 @@ export default function DisplayMap(props) {
 
   const style = {
     width: '100%',
-    height: '70vh'
+    height: '80vh'
   }
 
-  const state = {
-    lat: 40.5545,
-    lng: -89.61,
-    zoom: 2,
-  }
+  
 
-  const position = [state.lat, state.lng];
+  const position = [40.5545, -89.61];
+
+  const MyVerticallyCenteredModal = (props) => {
+    return (
+      <Modal
+        {...props}
+        size="sm"
+        backdrop="static"
+          keyboard={false}
+       aria-labelledby="contained-modal-title-vcenter"
+        centered
+      >
+        <Modal.Header closeButton>
+          <Modal.Title id="contained-modal-title-vcenter" >
+        
+            {zoneInfo.name}
+          
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          
+            <p>Cas infectés confirmés (total) : {zoneInfo.statistic.confirmed_infected_total}</p>
+            <p>Cas actifs confirmés : {zoneInfo.statistic.confirmed_active_cases}</p>
+            <p>Nombre de décès :{zoneInfo.statistic.deaths} </p>
+            <p>Cas rétablis : {zoneInfo.statistic.recovered}</p>
+            <p>Cas suspects : {zoneInfo.statistic.suspicious_cases}</p>
+            <p>Cas asymptomatiques : {zoneInfo.statistic.asymptomatic_cases}</p>
+            <p>Nouveaux cas : {zoneInfo.statistic.new_cases}</p>
+            <p>Nouveaux décès : {zoneInfo.statistic.new_deaths}</p>
+            <p>Dernière modification : {zoneInfo.timestamp}</p>
+          
+        </Modal.Body>
+        <Modal.Footer>
+            <Button variant="secondary" onClick={props.onHide}>
+              Fermer
+            </Button>
+            <Button variant="primary" onClick={() => ModifierZone}>Modifier</Button>
+          </Modal.Footer>
+      </Modal>
+    );
+  }
 
     const handleClickOpen = () => {
       setOpen(true);
@@ -68,36 +135,46 @@ export default function DisplayMap(props) {
       setOpen(false);
     };
 
-   const onClickMarker = () => {
-    return (
-      <div>
-        <Button variant="outlined" color="primary" onClick={handleClickOpen}>
-          Open responsive dialog
-        </Button>
-        <Dialog
-          fullScreen={fullScreen}
-          open={open}
-          onClose={handleClose}
-          aria-labelledby="responsive-dialog-title"
-        >
-          <DialogTitle id="responsive-dialog-title">{"Use Google's location service?"}</DialogTitle>
-          <DialogContent>
-            <DialogContentText>
-              Let Google help apps determine location. This means sending anonymous location data to
-              Google, even when no apps are running.
-            </DialogContentText>
-          </DialogContent>
-          <DialogActions>
-            <Button autoFocus onClick={handleClose} color="primary">
-              Disagree
-            </Button>
-            <Button onClick={handleClose} color="primary" autoFocus>
-              Agree
-            </Button>
-          </DialogActions>
-        </Dialog>
-      </div>
-    );
+   const onClickMarker = (e) => {
+     idZoneModal = e ;
+      getZoneFromDataBase(e);
+     console.log(zoneInfo) ;
+     
+      setModalShow(true);
+    }
+
+
+    const getZoneFromDataBase = (id) => {
+      axios.get(`https://corona-watch-esi.herokuapp.com/cartography/regions/${id}/`,{headers : {'Authorization': `Bearer ${token}`}
+          })
+          .then(res => {
+
+
+              var state = {
+                statistic: {
+                    confirmed_infected_total: res.data.statistic.confirmed_infected_total,
+                    confirmed_active_cases: res.data.statistic.confirmed_active_cases,
+                    deaths: res.data.statistic.deaths,
+                    recovered: res.data.statistic.recovered,
+                    suspicious_cases: res.data.statistic.suspicious_cases,
+                    asymptomatic_cases: res.data.statistic.asymptomatic_cases,
+                    new_cases: res.data.statistic.new_cases,
+                    new_deaths: res.data.statistic.new_deaths,
+                  },
+                  name:res.data.name,
+                  radius: res.data.statistic.radius,
+                  longitude: res.data.longitude,
+                  latitude: res.data.latitude,
+                  national: true,
+                  timestamp : res.data.timestamp,
+              };
+              zoneInfo = state ;
+
+            })
+          .catch( error => {
+              console.error(error);
+              alert("Une erreur s'est produite lors de la récupération de la zone ! ");
+          })
     }
   
 
@@ -105,19 +182,9 @@ export default function DisplayMap(props) {
 
     return (
       <div>
-        <Button
-        variant="contained"
-        color="primary"
-        block
-        //onclick = {handleAddZone}
-        //className={classes.button}
-        startIcon={<AddIcon />}
-      >
-        Ajouter une zone
-      </Button>
-       <br/><br/>
+        
         <Map center={position} 
-        zoom={state.zoom}
+        zoom={2}
         style={style}
         >
           <TileLayer
@@ -127,30 +194,21 @@ export default function DisplayMap(props) {
           {regions.map((row,index) => {
             return(
             <CircleMarker center={[row.latitude,row.longitude]} 
-                    color="red" radius={row.radius}
+                    color="red" 
+                    radius={row.radius}
                     icon={myIcon}
-                    onclick={onClickMarker}>
-            <Popup>
-            <h6>{row.name}</h6>
-            <p>Confirmés : {row.statistic.confirmed_infected_total} </p>
-            <p>Décès : {row.statistic.deaths}</p>
-            <p>cas suspects: {row.statistic.suspicious_cases}</p>
-            <p>cas asymptomatiques : {row.statistic.asymptomatic_cases}</p>
-            </Popup>
+                    key={row.id}
+                    onClick={() => onClickMarker(row.id) }>
           </CircleMarker>
           )
           })}
           
         </Map>
+
+        <MyVerticallyCenteredModal
+        show={modalShow}
+        onHide={() => setModalShow(false)}
+      />
       </div>
     )
   }
-
-
-
-
-
-
-      
-      
-    
