@@ -13,17 +13,16 @@ import Grid from '@material-ui/core/Grid';
 import clsx from 'clsx';
 import axios from 'axios';
 
+const token= localStorage.getItem('token') ;
+
 class addform extends React.Component {
   state = {
-    id: 3,
     title: "",
     content: "",
     images: [],
     videos: [],
-    writer: "admin",
-    date: null,
-    nbphotos: 0,
-    nbvideos: 0,
+    writer: "WRITER",
+    timestamp: null,
   }
 
 
@@ -162,11 +161,36 @@ class addform extends React.Component {
     }
 
 
-
-
-
-
   }
+
+   submitAddArticleForm = () => {
+    const timestamp = new Date().getTime();
+    const now = new Date(timestamp);
+    this.setState({
+        timestamp : new Date(timestamp) ,
+    })
+    
+    console.log(this.state) ;
+    console.log(JSON.stringify(this.state)) ;
+    fetch('https://corona-watch-esi.herokuapp.com/content/articles/', {
+        method : 'POST',
+      headers: {'Content-Type': 'application/json' ,'Authorization': `Bearer ${token}` },
+      body: JSON.stringify(this.state)
+    })
+    .then( data => data.json())
+    .then(
+      data => {
+        console.log(data.id);
+        alert("Article ajouté avec succes ! ");  
+      }
+    )
+    .catch( error => {
+        console.error(error);
+        alert("Une erreur s'est produite ! réessayer ");
+    })
+      
+  }
+
 
   render() {
 
@@ -246,10 +270,11 @@ class addform extends React.Component {
 
           <Button
               name="submit"
-              type="submit"
+              //type="submit"
               variant="contained"
               color="btn btn-light"
               className={classes.button}
+              onClick={this.submitAddArticleForm}
               endIcon={<PublishIcon />}
 
             >
