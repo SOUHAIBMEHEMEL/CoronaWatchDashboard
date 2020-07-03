@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import axios from 'axios' ;
 import ArticlesList from './listeArticles';
 
-
+const token= localStorage.getItem('token') ;
 
 export default class getArticleListDataFile extends React.Component{
 
@@ -12,7 +12,8 @@ export default class getArticleListDataFile extends React.Component{
     }
 
     componentDidMount (){
-        axios.get(`https://corona-watch-esi.herokuapp.com/content/articles-verified/`)
+        axios.get(`https://corona-watch-esi.herokuapp.com/content/articles-verified/`,{headers : {'Authorization': `Bearer ${token}`}
+      })
       .then(res => {
         const article = res.data;
     

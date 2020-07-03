@@ -31,3 +31,9 @@
     transform: rotate(360deg);
   }
 }
+
+label.required:after {
+  content: '*';
+  margin-left: 2px;
+  color: red; 
+}

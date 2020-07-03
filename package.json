@@ -21,6 +21,7 @@
     "file-system": "^2.2.2",
     "google-maps-react": "^2.0.6",
     "jwt-decode": "^2.2.0",
+    "leaflet": "^1.6.0",
     "material-table": "^1.57.2",
     "moment": "^2.24.0",
     "prop-types": "^15.7.2",
@@ -40,6 +41,7 @@
     "react-twitter-embed": "^3.0.3",
     "recharts": "^1.8.5",
     "redux": "^4.0.5",
+    "styled-components": "^5.1.1",
     "video-react": "^0.14.1"
   },
   "scripts": {

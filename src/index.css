@@ -11,3 +11,9 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+label.required:after {
+  content: '*';
+  margin-left: 2px;
+  color: red; 
+}

@@ -217,8 +217,6 @@ export default function EnhancedTable(props) {
               {stableSort(articles, getComparator(order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => {
-
-
                   return (
                     <TableRow
                       hover

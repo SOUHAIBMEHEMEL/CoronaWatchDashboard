@@ -17,6 +17,7 @@ import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
+import AddIcon from '@material-ui/icons/Add';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
@@ -26,7 +27,9 @@ import ListItemText from '@material-ui/core/ListItemText';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import Avatar from '@material-ui/core/Avatar';
 import {Link} from 'react-router-dom';
-import Map from './activities/mapContainer';
+import Map from './activities/getRegionsDataFile';
+import Try from './activities/regionInfo';
+import AddZone from './addZone/addZone';
 
 const drawerWidth = 240;
 
@@ -211,8 +214,9 @@ export default function PersistentDrawerLeft() {
   
   function chooseIncon (index) {
     if (index === 0 ) return (<AssignmentIcon/>) ;
-    if (index === 1 ) return (<InsertChartIcon /> ) ;
-    if (index === 2 ) return (<PersonIcon/>) ;
+    if (index === 1) return(<AddIcon/>)
+    if (index === 2 ) return (<InsertChartIcon /> ) ;
+    if (index === 3 ) return (<PersonIcon/>) ;
   }
 
   function  handleContent (index){
@@ -304,7 +308,7 @@ export default function PersistentDrawerLeft() {
         </div>
         <Divider style={{width:'50%', marginLeft:'25%',backgroundColor:'#fff', marginBottom:'10px'}} />
         <List>
-          {['Mes activités', 'Statistiques', 'Mon compte'].map((text, index) => (
+          {['Mes activités', 'Ajouter une zone','Statistiques', 'Mon compte'].map((text, index) => (
             <ListItem button key={text} className={'menuItem2'} onClick={event => handleContent(index)} >
               <ListItemIcon className={classes.menuItem}>
                 {chooseIncon(index)}
@@ -336,7 +340,10 @@ export default function PersistentDrawerLeft() {
             <Map/>      
         </Grid>
         <Grid className={'contentAgentDeSante'} style={{display:'none'}} item lg={12} md={12}>
-                   
+            <AddZone/>  
+        </Grid>
+        <Grid className={'contentAgentDeSante'} style={{display:'none'}} item lg={12} md={12}>
+            <Try/>  
         </Grid>
         <Grid className={'contentAgentDeSante'} style={{display:'none'}} item lg={12} md={12}>
                   

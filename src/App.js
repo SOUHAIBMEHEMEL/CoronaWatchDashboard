@@ -13,6 +13,8 @@ import LoginAgentDeSante from './Components/AgentDeSante/auth/loginPage'
 import LogoutAgentDeSante from './Components/AgentDeSante/auth/logout'
 import AgentDeSantePage from './Components/AgentDeSante/auth/AgentDeSantePage'
 
+import AddZone from './Components/AgentDeSante/addZone/addZone'
+
 import Gestionnaire from './Components/gestionnaire'
 
 export default class logout extends Component {
@@ -30,6 +32,7 @@ export default class logout extends Component {
         <Route exact path='/AgentDeSante/login' component={LoginAgentDeSante} />
         <Route exact path='/AgentDeSante/AgentDeSantePage' component={AgentDeSantePage} />
         <Route exact path='/AgentDeSante/logout' component={LogoutAgentDeSante} />
+        <Route exact path='/AgentDeSante/addZone/addZone' component={AddZone}></Route>
       </Switch>
       </BrowserRouter>
     );

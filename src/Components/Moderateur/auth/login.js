@@ -62,6 +62,7 @@ class Login extends Component {
     .then(
       data => {
         console.log(data.token);
+        localStorage.setItem('token', data.token);
       }
     )
     .catch( error => console.error(error))
