@@ -23,6 +23,7 @@
     "jwt-decode": "^2.2.0",
     "leaflet": "^1.6.0",
     "material-table": "^1.57.2",
+    "mdbreact": "^4.27.0",
     "moment": "^2.24.0",
     "prop-types": "^15.7.2",
     "react": "^16.13.1",

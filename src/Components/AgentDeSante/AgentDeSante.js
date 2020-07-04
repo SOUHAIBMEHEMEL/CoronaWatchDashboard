@@ -30,8 +30,12 @@ import {Link} from 'react-router-dom';
 import Map from './activities/getRegionsDataFile';
 import Try from './activities/regionInfo';
 import AddZone from './addZone/addZone';
+import ModifyInfoZone from './modifyZone/getRegionsDataFile';
+import BorderColorIcon from '@material-ui/icons/BorderColor';
 
 const drawerWidth = 240;
+
+
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -194,6 +198,13 @@ const useStyles = makeStyles(theme => ({
     }),
     marginLeft: 0,
   },
+  formControl: {
+    margin: theme.spacing(1),
+    minWidth: 120,
+  },
+  selectEmpty: {
+    marginTop: theme.spacing(2),
+  },
 }));
 
 export default function PersistentDrawerLeft() {
@@ -214,9 +225,10 @@ export default function PersistentDrawerLeft() {
   
   function chooseIncon (index) {
     if (index === 0 ) return (<AssignmentIcon/>) ;
-    if (index === 1) return(<AddIcon/>)
-    if (index === 2 ) return (<InsertChartIcon /> ) ;
-    if (index === 3 ) return (<PersonIcon/>) ;
+    if (index === 1) return(<AddIcon/>);
+    if (index == 2) return (<BorderColorIcon/>);
+    if (index === 3 ) return (<InsertChartIcon /> ) ;
+    if (index === 4 ) return (<PersonIcon/>) ;
   }
 
   function  handleContent (index){
@@ -308,7 +320,7 @@ export default function PersistentDrawerLeft() {
         </div>
         <Divider style={{width:'50%', marginLeft:'25%',backgroundColor:'#fff', marginBottom:'10px'}} />
         <List>
-          {['Mes activités', 'Ajouter une zone','Statistiques', 'Mon compte'].map((text, index) => (
+          {['Mes activités', 'Ajouter une zone','Modifier une zone','Statistiques', 'Mon compte'].map((text, index) => (
             <ListItem button key={text} className={'menuItem2'} onClick={event => handleContent(index)} >
               <ListItemIcon className={classes.menuItem}>
                 {chooseIncon(index)}
@@ -343,7 +355,10 @@ export default function PersistentDrawerLeft() {
             <AddZone/>  
         </Grid>
         <Grid className={'contentAgentDeSante'} style={{display:'none'}} item lg={12} md={12}>
-            <Try/>  
+            <ModifyInfoZone classes={classes}/>  
+        </Grid>
+        <Grid className={'contentAgentDeSante'} style={{display:'none'}} item lg={12} md={12}>
+                  
         </Grid>
         <Grid className={'contentAgentDeSante'} style={{display:'none'}} item lg={12} md={12}>
                   

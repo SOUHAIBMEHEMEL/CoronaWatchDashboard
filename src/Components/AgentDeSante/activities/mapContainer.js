@@ -7,12 +7,6 @@ import mock from './data';
 //import RegionInfo from './regionInfo';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
-import AddIcon from '@material-ui/icons/Add';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useTheme } from '@material-ui/core/styles';
 import Modal from 'react-bootstrap/Modal';
@@ -53,9 +47,6 @@ var zoneInfo =  {
 
 
 
-const ModifierZone =(e) => {
-  console.log(e);
-}
 
 const handleAddZone = () => {
   return <Redirect to="/AgentDeSante/addZone/addZone" />
@@ -86,6 +77,9 @@ export default function DisplayMap(props) {
   
 
   const position = [40.5545, -89.61];
+
+
+  
 
   const MyVerticallyCenteredModal = (props) => {
     return (
@@ -121,11 +115,12 @@ export default function DisplayMap(props) {
             <Button variant="secondary" onClick={props.onHide}>
               Fermer
             </Button>
-            <Button variant="primary" onClick={() => ModifierZone}>Modifier</Button>
+            
           </Modal.Footer>
       </Modal>
     );
   }
+
 
     const handleClickOpen = () => {
       setOpen(true);
@@ -162,7 +157,7 @@ export default function DisplayMap(props) {
                     new_deaths: res.data.statistic.new_deaths,
                   },
                   name:res.data.name,
-                  radius: res.data.statistic.radius,
+                  radius: res.data.radius,
                   longitude: res.data.longitude,
                   latitude: res.data.latitude,
                   national: true,

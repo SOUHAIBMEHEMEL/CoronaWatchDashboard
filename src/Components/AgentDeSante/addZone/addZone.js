@@ -320,7 +320,7 @@ export default class SimpleExample extends Component {
                     
                     <div class="form-row">
                         <div class="form-group col-md-4">
-                            <label class="required" for="deaths">nombre de décès</label>
+                            <label class="required" for="deaths">Nombre de décès</label>
                             <input type="number" class="form-control" id="deaths" placeholder="Décès"  onChange={this.changeDeaths} value={this.state.statistic.deaths} required="true"/>
                         </div>
                         <div class="form-group col-md-4">
@@ -354,7 +354,7 @@ export default class SimpleExample extends Component {
                         <div class="form-check">
                           <input class="form-check-input" type="checkbox"  id="checkboxNational" onClick={this.changeNational} />
                           <label class="form-check-label" for="invalidCheck2">
-                            Zone natonale
+                            Zone nationale
                           </label>
                         </div>
                       </div>
