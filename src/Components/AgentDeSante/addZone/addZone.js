@@ -4,6 +4,7 @@ import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 import { Map, TileLayer, Marker, Popup } from 'react-leaflet';
 import Button from '@material-ui/core/Button';
+import { Card} from '@material-ui/core';
 
 
 
@@ -267,8 +268,14 @@ export default class SimpleExample extends Component {
     const position = [this.state.latitude, this.state.longitude]
     return (
         <div>
+          <Card>
           <h4 align="center">Ajouter une nouvelle zone</h4>
        <p align="center">Cliquez sur le centre de la zone sur la carte</p>
+
+       </Card>
+       <br></br>
+
+       <Card>
             <Map 
                 center={[19.4100819, -99.1630388]} 
                 onClick={this.addMarker}
@@ -289,6 +296,11 @@ export default class SimpleExample extends Component {
         </Marker>
         
       </Map>
+
+      </Card>
+
+      <br></br>
+      <Card>
             <div class="container">
                 <form class=" mt-2" action="" method="post" enctype="multipart/form-data">
                 <div class="form-row">
@@ -405,6 +417,7 @@ export default class SimpleExample extends Component {
                     
                 </form>
             </div>
+            </Card>
       </div>
     )
   }

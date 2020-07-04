@@ -48,10 +48,6 @@ var zoneInfo =  {
 
 
 
-const handleAddZone = () => {
-  return <Redirect to="/AgentDeSante/addZone/addZone" />
-  
-}
 
 export default function DisplayMap(props) {
   

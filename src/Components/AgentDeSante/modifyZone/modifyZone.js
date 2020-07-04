@@ -7,6 +7,7 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import Button from '@material-ui/core/Button';
 import { render } from '@testing-library/react';
+import { Card} from '@material-ui/core';
 
 
 const token= localStorage.getItem('token') ;
@@ -329,6 +330,10 @@ class ModifyZone extends Component{
 
         return (
             <div>
+
+              <Card>
+              <h4 align="center">Modifier les informations d'une zone</h4>
+              
                 <FormControl variant="outlined" className={classes.formControl}>
                     <InputLabel id="demo-simple-select-outlined-label">Zone</InputLabel>
                     <Select
@@ -359,8 +364,13 @@ class ModifyZone extends Component{
                         onClick={this.onClickMarker}>
                             Choisir
                     </Button>
+                    <br></br>
 
+                    </Card>
 
+                    <br></br>
+
+                    <Card>
                     <div class="container">
                 <form class=" mt-2" action="" method="post" enctype="multipart/form-data">
                 <div class="form-row">
@@ -466,6 +476,7 @@ class ModifyZone extends Component{
                     
                 </form>
             </div>
+            </Card>
                                 
                 
 

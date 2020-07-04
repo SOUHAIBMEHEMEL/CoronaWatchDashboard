@@ -32,6 +32,8 @@ import Try from './activities/regionInfo';
 import AddZone from './addZone/addZone';
 import ModifyInfoZone from './modifyZone/getRegionsDataFile';
 import BorderColorIcon from '@material-ui/icons/BorderColor';
+import Statistics from './statistics/Card';
+import { Statistic } from 'antd';
 
 const drawerWidth = 240;
 
@@ -180,6 +182,9 @@ const useStyles = makeStyles(theme => ({
   main:{
 
   },
+  button: {
+    margin: theme.spacing(2),
+  },
   content: {
     backgroundColor: fade('#CCCCFE', 0.15),
     flexGrow: 1,
@@ -234,7 +239,7 @@ export default function PersistentDrawerLeft() {
   function  handleContent (index){
     var menuElement = document.getElementsByClassName('menuItem2');
     var element = document.getElementsByClassName('contentAgentDeSante');
-    console.log('idx= ',index);
+   
     for (let i = 0; i < element.length; i++){
       element[i].style.display = "none";
       menuElement[i].style.borderLeft = '5px solid transparent'; 
@@ -358,7 +363,7 @@ export default function PersistentDrawerLeft() {
             <ModifyInfoZone classes={classes}/>  
         </Grid>
         <Grid className={'contentAgentDeSante'} style={{display:'none'}} item lg={12} md={12}>
-                  
+                  <Statistics/>
         </Grid>
         <Grid className={'contentAgentDeSante'} style={{display:'none'}} item lg={12} md={12}>
                   

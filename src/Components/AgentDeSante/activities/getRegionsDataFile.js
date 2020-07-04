@@ -1,6 +1,6 @@
 import React from 'react' ;
 import axios from 'axios' ;
-import MapData from './mapContainer';
+import MapData from './map';
 
 const token= localStorage.getItem('token') ;
 
