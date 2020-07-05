@@ -276,6 +276,7 @@ class addform extends React.Component {
               className={classes.button}
               onClick={this.submitAddArticleForm}
               endIcon={<PublishIcon />}
+              style={{borderRadius:'25px'}}
 
             >
               Publier

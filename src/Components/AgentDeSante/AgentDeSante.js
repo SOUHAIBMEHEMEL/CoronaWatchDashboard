@@ -33,11 +33,12 @@ import AddZone from './addZone/addZone';
 import ModifyInfoZone from './modifyZone/getRegionsDataFile';
 import BorderColorIcon from '@material-ui/icons/BorderColor';
 import Statistics from './statistics/Card';
+import MapIcon from '@material-ui/icons/Map';
 import { Statistic } from 'antd';
 
+
+
 const drawerWidth = 240;
-
-
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -53,13 +54,14 @@ const useStyles = makeStyles(theme => ({
       duration: theme.transitions.duration.leavingScreen,
     }),
     backgroundColor:'#ffffff',
-    height: '50px',
-    boxShadow: '0px -3px 10px 0px rgba(204,204,238,0.75)',
+    height: '65px',
+    paddingTop:'5px',
+    boxShadow: '0px -3px 10px 0px rgba(204,204,238,0.0)',
   },
   appBarShift: {
     width: `calc(100% - ${drawerWidth}px)`,
     marginLeft: drawerWidth,
-    backgroundColor:'#ffffff',
+    backgroundColor:'transparent',
     transition: theme.transitions.create(['margin', 'width'], {
       easing: theme.transitions.easing.easeOut,
       duration: theme.transitions.duration.enteringScreen,
@@ -70,8 +72,6 @@ const useStyles = makeStyles(theme => ({
   },
   menuItem: {
     color:'#ffffff',
-    fontSize:'15px',
-    fontWeight:'2%',
   },
   menuRow:{
     '&:hover':{backgroundColor:'rgba(255,255,255,.1)',},
@@ -90,30 +90,31 @@ const useStyles = makeStyles(theme => ({
     '&:hover':{backgroundColor:'rgba(255,255,255,.1)',}
   },
   profilePhoto: {
+    boxShadow: '1px 2px 11px -1px rgba(54,54,118,0.75)',
+    background:'#ffffff',
     marginLeft:'10px',
-    marginTop: '6px',
+    marginTop: '10px',
     height:'40px',
     width:'40px'
   },
   small: {
-    width: theme.spacing(4),
-    height: theme.spacing(4),
-    border:'1px #EEEEEE solid'
+    width: '34px',
+    height: '34px',
   },
   NotificationsBtn:{
-    marginTop:'8px',
+    boxShadow: '1px 2px 11px -1px rgba(54,54,118,0.75)',
+    background:'#ffffff',
+    marginTop:'10px',
     marginRight:'10px',
-    height:'37px',
-    width:'37px'
+    height:'40px',
+    width:'40px'
   },
   search: {
     position: 'relative',
     borderTopLeftRadius:'5px',
     borderBottomLeftRadius:'5px',
     backgroundColor: fade('#CCCCDD', 0.2),
-    '&:hover': {
-      backgroundColor: fade('#CCCCDD', 0.3),
-    },
+    '&:hover': {backgroundColor: fade('#CCCCDD', 0.3),},
     
     left: '-16px',
     width: '100%',
@@ -152,7 +153,7 @@ const useStyles = makeStyles(theme => ({
   },
   sectionDesktop: {
     position:'fixed',
-    right: '2.5%',
+    right: '40px',
     display: 'none',
     [theme.breakpoints.up('md')]: {
       display: 'flex',
@@ -168,8 +169,8 @@ const useStyles = makeStyles(theme => ({
   },
   drawerPaper: {
     width: drawerWidth,
-    background:'#4E73DF',
-    boxShadow: '-3px 52px 10px 0px rgba(204,204,238,0.75)',
+    background:'transparent',
+    borderRight:'1px solid transparent',
   },
   drawerHeader: {
     display: 'flex',
@@ -182,13 +183,13 @@ const useStyles = makeStyles(theme => ({
   main:{
 
   },
-  button: {
-    margin: theme.spacing(2),
-  },
   content: {
-    backgroundColor: fade('#CCCCFE', 0.15),
+    backgroundColor: 'transparent',
     flexGrow: 1,
-    padding: theme.spacing(3),
+    paddingLeft: theme.spacing(3),
+    paddingRight:theme.spacing(3),
+    paddingTop:'45px',
+    paddingBottom: '30px',
     transition: theme.transitions.create('margin', {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
@@ -202,6 +203,9 @@ const useStyles = makeStyles(theme => ({
       duration: theme.transitions.duration.enteringScreen,
     }),
     marginLeft: 0,
+  },
+  button: {
+    margin: theme.spacing(2),
   },
   formControl: {
     margin: theme.spacing(1),
@@ -229,7 +233,7 @@ export default function PersistentDrawerLeft() {
   const menuId = 'primary-search-account-menu';
   
   function chooseIncon (index) {
-    if (index === 0 ) return (<AssignmentIcon/>) ;
+    if (index === 0 ) return (<MapIcon/>) ;
     if (index === 1) return(<AddIcon/>);
     if (index == 2) return (<BorderColorIcon/>);
     if (index === 3 ) return (<InsertChartIcon /> ) ;
@@ -237,21 +241,19 @@ export default function PersistentDrawerLeft() {
   }
 
   function  handleContent (index){
-    var menuElement = document.getElementsByClassName('menuItem2');
+    var menuElement = document.getElementsByClassName('menuItem01');
     var element = document.getElementsByClassName('contentAgentDeSante');
-   
     for (let i = 0; i < element.length; i++){
       element[i].style.display = "none";
-      menuElement[i].style.borderLeft = '5px solid transparent'; 
-      menuElement[i].style.background= "#4E73DF";
+      menuElement[i].style.background= "transparent";
     }
-    menuElement[index].style.background= "rgba(0,0,100,.15)";
+    menuElement[index].style.background= "rgba(200,200,200,.25)";
     element[index].style.display = "block";
-    menuElement[index].style.borderLeft = '5px solid #fff';
+    menuElement[index].style.borderRadius = '30px';
   }
 
   return (
-    <div className={classes.root}>
+    <div id='AppRoot' className={classes.root}>
       <CssBaseline />
       <AppBar
         position="fixed"
@@ -269,24 +271,12 @@ export default function PersistentDrawerLeft() {
           >
             <MenuIcon color="action" />
           </IconButton>
-          <div className={classes.search}>
-            <InputBase 
-              placeholder="Search…"
-              classes={{
-                root: classes.inputRoot,
-                input: classes.inputInput,
-              }}
-              inputProps={{ 'aria-label': 'search' }}
-            />
-            <div className={classes.searchIcon}>
-              <SearchIcon style={{color:"#ffffff",}} />
-            </div>
-          </div>
+          
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
-            <IconButton aria-label="show new notifications" color="inherit" className={classes.NotificationsBtn}>
-              <Badge badgeContent={6} color="secondary">
-                <NotificationsIcon  color='action' />
+            <IconButton aria-label="show new notifications" className={classes.NotificationsBtn}>
+              <Badge>
+                <NotificationsIcon  style={{color:'#666'}} />
               </Badge>
             </IconButton>
             <IconButton className={classes.profilePhoto}
@@ -294,9 +284,8 @@ export default function PersistentDrawerLeft() {
               aria-label="account of current user"
               aria-controls={menuId}
               aria-haspopup="true"
-              color="action"
             >
-              <Avatar alt="Remy Sharp" src="/images/face2.jpg" className={classes.small}/>
+              <Avatar alt="Remy Sharp" src="/images/face16.jpg" className={classes.small}/>
             </IconButton>
           </div>
         </Toolbar>
@@ -317,32 +306,28 @@ export default function PersistentDrawerLeft() {
           <img alt='logo' src="/images/logo.png" height='100'width='100' style={{margin:'40px', marginRight:'60px'}}/>
           }
 
-
-          
-          <IconButton onClick={handleDrawerClose} className={classes.menuClose}>
-            {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
-          </IconButton>
         </div>
-        <Divider style={{width:'50%', marginLeft:'25%',backgroundColor:'#fff', marginBottom:'10px'}} />
-        <List>
-          {['Mes activités', 'Ajouter une zone','Modifier une zone','Statistiques', 'Mon compte'].map((text, index) => (
-            <ListItem button key={text} className={'menuItem2'} onClick={event => handleContent(index)} >
-              <ListItemIcon className={classes.menuItem}>
+        <Divider style={{width:'70%', marginLeft:'15%',backgroundColor:'#fff', marginBottom:'10px'}} />
+        <List style={{paddingLeft:'10px'}}>
+          {['Carte géographique', 'Ajouter une zone','Modifier une zone','Statistiques', 'Mon compte'].map((text, index) => (
+            <ListItem button key={index} className={'menuItem01'} onClick={event => handleContent(index)} style={{height:'38px',marginTop:'7px'}} >
+              <ListItemIcon className={classes.menuItem} style={{marginLeft:'5px'}}>
                 {chooseIncon(index)}
               </ListItemIcon>
-              <ListItemText  primary={text} className={classes.menuItem} /> 
+              <ListItemText className={classes.menuItem} style={{marginLeft:'-15px'}} >{text}</ListItemText>
+               
             </ListItem>
           ))}
         </List>
-        <Divider style={{ backgroundColor:'#fff', marginTop:'10px'}} />
+        <Divider style={{width:'70%', marginLeft:'15%',backgroundColor:'#fff', marginBottom:'10px', marginTop:'30px'}} />
 
         <List>
           {[' Déconnexion'].map((text, index) => (
             <ListItem button key={text}>
-              <ListItemIcon className={classes.menuItem}>
+              <ListItemIcon className={classes.menuItem} style={{paddingLeft:'17px'}}>
                 <ExitToAppIcon/>
               </ListItemIcon>
-              <Link style={{color:'#ffffff'}} to='/AgentDeSante/logout'>Se Deconnecter</Link> 
+              <Link style={{color:'#ffffff', fontWeight:'400', fontSize:'16px', paddingTop:'3px'}} to='/Moderateur/logout'>Se Deconnecter</Link> 
             </ListItem>
           ))}
         </List>
@@ -366,12 +351,9 @@ export default function PersistentDrawerLeft() {
                   <Statistics/>
         </Grid>
         <Grid className={'contentAgentDeSante'} style={{display:'none'}} item lg={12} md={12}>
-                  
+        <Map/>
         </Grid>
       </main> 
     </div>
   );
 }
-
-
-

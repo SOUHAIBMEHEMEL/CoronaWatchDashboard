@@ -4,6 +4,11 @@ import L from 'leaflet';
 import { Map, TileLayer, Marker, Popup,CircleMarker } from 'react-leaflet';
 import Modal from 'react-bootstrap/Modal';
 import axios from 'axios' ;
+import { Card} from '@material-ui/core';
+import Typography from '@material-ui/core/Typography';
+import Grid from '@material-ui/core/Grid';
+import MapIcon from '@material-ui/icons/Map';
+
 
 
 import Button from '@material-ui/core/Button';
@@ -48,7 +53,7 @@ class map extends Component {
 
     style = {
         width: '100%',
-        height: '80vh'
+        height: '81vh'
       }
 
 
@@ -151,6 +156,15 @@ class map extends Component {
 
         return (
             <div>
+              <Grid container item lg={8} md={8} xl={8} xs={8} style={{top:'10px', zIndex:'9999', position:'fixed'}}>
+                <Card style={{height:'40px', width:'40px', backgroundColor:'#fff', borderRadius:'20px',boxShadow: '1px 2px 11px -1px rgba(54,54,118,0.75)',}}>
+                  <MapIcon style={{color:'#666',height:'26px', width:'26px', marginTop:'7px', marginLeft:'7px' }}/>
+                </Card>
+                <Typography variant='h5' style={{textAlign:'left', marginLeft:'15px',color:'#fff', paddingTop:'5px'}}>
+                Carte géograhique
+                </Typography>
+              </Grid>
+              <Card container spacing={3}>
                 <Map center={position} 
                 zoom={2}
                 style={this.style}
@@ -177,6 +191,7 @@ class map extends Component {
                 show={this.state.modalShow}
                 onHide={() => this.setState({modalShow : false})}
             />
+            </Card>
 
             </div>
         )

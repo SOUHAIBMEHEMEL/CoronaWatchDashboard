@@ -6,6 +6,9 @@ import NewArticle from './addArticle/NewArticle';
 import ArticleList from './article/getArticleListDataFile';
 import CommentList from './notificationsUsers/getCommentsDataFile' ;
 import NotifsArticles from './notificationsModerator/getArticleListRedacteur';
+import HomeIcon from '@material-ui/icons/Home';
+import Typography from '@material-ui/core/Typography';
+import Card from '@material-ui/core/Card';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -24,6 +27,14 @@ export default function AutoGrid() {
 
   return (
     <div className={classes.root}>
+      <Grid container item lg={8} md={8} xl={8} xs={8} style={{top:'10px', zIndex:'9999', position:'fixed'}}>
+                <Card style={{height:'40px', width:'40px', backgroundColor:'#fff', borderRadius:'20px',boxShadow: '1px 2px 11px -1px rgba(54,54,118,0.75)',}}>
+                  <HomeIcon style={{color:'#666',height:'26px', width:'26px', marginTop:'7px', marginLeft:'7px' }}/>
+                </Card>
+                <Typography variant='h5' style={{textAlign:'left', marginLeft:'15px',color:'#fff', paddingTop:'5px'}}>
+                  Accueil
+                </Typography>
+              </Grid>
       <Grid container spacing={3}>
        
         <Grid item lg={6} md={6} xl={3} xs={12}>

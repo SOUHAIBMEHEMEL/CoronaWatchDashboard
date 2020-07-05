@@ -8,6 +8,9 @@ import Select from '@material-ui/core/Select';
 import Button from '@material-ui/core/Button';
 import { render } from '@testing-library/react';
 import { Card} from '@material-ui/core';
+import Typography from '@material-ui/core/Typography';
+import Grid from '@material-ui/core/Grid';
+import BorderColorIcon from '@material-ui/icons/BorderColor';
 
 
 const token= localStorage.getItem('token') ;
@@ -330,9 +333,18 @@ class ModifyZone extends Component{
 
         return (
             <div>
+              <Grid container item lg={8} md={8} xl={8} xs={8} style={{top:'10px', zIndex:'9999', position:'fixed'}}>
+                <Card style={{height:'40px', width:'40px', backgroundColor:'#fff', borderRadius:'20px',boxShadow: '1px 2px 11px -1px rgba(54,54,118,0.75)',}}>
+                  <BorderColorIcon style={{color:'#666',height:'26px', width:'26px', marginTop:'7px', marginLeft:'7px' }}/>
+                </Card>
+                <Typography variant='h5' style={{textAlign:'left', marginLeft:'15px',color:'#fff', paddingTop:'5px'}}>
+                  Modifier les informations d'une zone
+                </Typography>
+              </Grid>
+         
 
               <Card>
-              <h4 align="center">Modifier les informations d'une zone</h4>
+              <br></br>
               
                 <FormControl variant="outlined" className={classes.formControl}>
                     <InputLabel id="demo-simple-select-outlined-label">Zone</InputLabel>
@@ -356,21 +368,19 @@ class ModifyZone extends Component{
                     </Select>
                 </FormControl>
 
+                <Button className={'validerBtnArticle form-control'} variant="contained" color="primary" style={{backgroundColor:'#4E73DF',borderRadius:'25px'}} onClick={this.onClickMarker}>
+                                 Choisir la zone
+                              </Button>
+
                 
-                    <Button
-                        variant="contained"
-                        block    
-                        class="btn btn-secondary form-control" 
-                        onClick={this.onClickMarker}>
-                            Choisir
-                    </Button>
+                  
                     <br></br>
 
-                    </Card>
+                   
 
                     <br></br>
 
-                    <Card>
+                   
                     <div class="container">
                 <form class=" mt-2" action="" method="post" enctype="multipart/form-data">
                 <div class="form-row">
@@ -439,40 +449,26 @@ class ModifyZone extends Component{
                         <input hidden name="national" value={this.state.national} />
                         <input hidden name="statistic" value={this.state.statistic} />
 
-
                         <div class="form-row">
                             <div class="form-group col-md-6">
-                            <Button
-                                variant="contained"
-                                //color="secondary"
-                                class="btn btn-secondary form-control"
-                                block
-                                //onclick = {handleAddZone}
-                                //className={classes.button}
-                                //startIcon={<AddIcon />}
-                            >
-                                Annuler
-                            </Button>
+                            <Button className={'form-control'} variant="contained" color="secondary" style={{borderRadius:'25px'}} >
+                                  Annuler
+                              </Button>
+                            
                                 
                             </div>
                             <div class="form-group col-md-6">
-                            <Button
-                                name="submit"
-                                class="btn btn-primary form-control"
-                                //type="submit"
-                                variant="contained"
-                                //color="primary "
-                                block
-                                onClick = {this.handleModifyZone}
-                                //className={classes.button}
-                                //startIcon={<AddIcon />}
-                            >
-                                Confirmer les modifications
-                            </Button>
+                            <Button className={'form-control'} variant="contained" color="primary" style={{backgroundColor:'#4E73DF',borderRadius:'25px'}} onClick = {this.handleModifyZone}>
+                                  Confirmer les modifications
+                              </Button>
+                            
                                 
                             </div>
                            
                         </div> 
+
+
+                        
                     
                 </form>
             </div>

@@ -5,6 +5,9 @@ import L from 'leaflet';
 import { Map, TileLayer, Marker, Popup } from 'react-leaflet';
 import Button from '@material-ui/core/Button';
 import { Card} from '@material-ui/core';
+import AddIcon from '@material-ui/icons/Add';
+import Typography from '@material-ui/core/Typography';
+import Grid from '@material-ui/core/Grid';
 
 
 
@@ -41,7 +44,7 @@ export default class SimpleExample extends Component {
   }
 
   style = {
-    width: '100%',
+    width: '98%',
     height: '70vh',
   }
 
@@ -268,14 +271,21 @@ export default class SimpleExample extends Component {
     const position = [this.state.latitude, this.state.longitude]
     return (
         <div>
-          <Card>
-          <h4 align="center">Ajouter une nouvelle zone</h4>
-       <p align="center">Cliquez sur le centre de la zone sur la carte</p>
+          <Grid container item lg={8} md={8} xl={8} xs={8} style={{top:'10px', zIndex:'9999', position:'fixed'}}>
+                <Card style={{height:'40px', width:'40px', backgroundColor:'#fff', borderRadius:'20px',boxShadow: '1px 2px 11px -1px rgba(54,54,118,0.75)',}}>
+                  <AddIcon style={{color:'#666',height:'26px', width:'26px', marginTop:'7px', marginLeft:'7px' }}/>
+                </Card>
+                <Typography variant='h5' style={{textAlign:'left', marginLeft:'15px',color:'#fff', paddingTop:'5px'}}>
+                  Ajouter une nouvelle zone
+                </Typography>
+              </Grid>
+         
+                <p align="center">Cliquez sur le centre de la zone sur la carte</p>
 
-       </Card>
        <br></br>
 
        <Card>
+         <Grid container item style={{margin:'10px'}}>
             <Map 
                 center={[19.4100819, -99.1630388]} 
                 onClick={this.addMarker}
@@ -296,11 +306,12 @@ export default class SimpleExample extends Component {
         </Marker>
         
       </Map>
+      </Grid>
 
-      </Card>
+      
 
       <br></br>
-      <Card>
+      
             <div class="container">
                 <form class=" mt-2" action="" method="post" enctype="multipart/form-data">
                 <div class="form-row">
@@ -379,33 +390,17 @@ export default class SimpleExample extends Component {
 
                         <div class="form-row">
                             <div class="form-group col-md-6">
-                            <Button
-                                variant="contained"
-                                //color="secondary"
-                                class="btn btn-secondary form-control"
-                                block
-                                //onclick = {handleAddZone}
-                                //className={classes.button}
-                                //startIcon={<AddIcon />}
-                            >
-                                Annuler
-                            </Button>
+                            <Button className={'supprimerBtnArticle form-control'} variant="contained" color="secondary" style={{borderRadius:'25px'}} >
+                                  Annuler
+                              </Button>
+                            
                                 
                             </div>
                             <div class="form-group col-md-6">
-                            <Button
-                                name="submit"
-                                class="btn btn-primary form-control"
-                                //type="submit"
-                                variant="contained"
-                                //color="primary "
-                                block
-                                onClick = {this.handleAddZone}
-                                //className={classes.button}
-                                //startIcon={<AddIcon />}
-                            >
-                                Confirmer
-                            </Button>
+                            <Button className={'validerBtnArticle form-control'} variant="contained" color="primary" style={{backgroundColor:'#4E73DF',borderRadius:'25px'}} onClick = {this.handleAddZone}>
+                                  Confirmer
+                              </Button>
+                            
                                 
                             </div>
                            
