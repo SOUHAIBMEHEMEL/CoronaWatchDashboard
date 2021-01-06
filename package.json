@@ -14,7 +14,7 @@
     "apollo-client": "^2.6.10",
     "apollo-link-http": "^1.5.17",
     "auth0-js": "^9.13.2",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "bootstrap": "^4.4.1",
     "component": "^1.1.0",
     "date-fns": "^2.14.0",
